@@ -2,11 +2,24 @@
 \chapter{文献综述}
 
 \section{背景介绍}
-\par 正文格式与具体要求\cite{zjuthesisrules}
+薛定谔方程（Schr\"odinger's equation）的含时演化一直都是量子化学中一个重要的分支。在完备基组下，薛定谔方程的含时演化可通过本征态的相位改变来完成，而这也是一般的线性偏微分方程常用的解析求解含时演化的方式\cite{courant2008methods}：
 
-\subsection{小节}
+\begin{quote}
+若$\{H_k'\}$和$\{|H_k'\rangle\}$分别为以$\hat{H}$为哈密顿量的系统下的本征值和本征向量，即
+\begin{equation}
+	\hat{H} |H'_k\rangle = H_k' |H'_k\rangle
+\end{equation}
+且在初始条件下有
+\begin{equation}
+	|\psi \rangle\big|_{t=0} = \sum_k c_k |H_k'\rangle
+\end{equation}
+那么
+\begin{equation}
+	|\psi \rangle\big|_{t} = \sum_k c_k e^{-iH_k t}|H_k'\rangle
+\end{equation}
+\end{quote}
 
-\subsubsection{小节}
+然而由于具体模型过于复杂，比如一个分子的电子结构，我们无法解析给出该体系的所有独立的本征态，从而不可避免地出现一个有限基组的截断过程。而这样的截断使得运用同样的方法进行含时演化会造成巨大的误差。此时我们需要一个另外的基于空间的基组来展开初始波函数，同时将体系的哈密顿算符转化为矩阵，从而进行含时演化，而在量子动力学领域中享有``量子精确解''称号的离散变量表象（Discrete Variable Representation，DVR）方法则基本属于这样的思想\cite{colbert1992novel}。
 
 \section{国内外研究现状}
 

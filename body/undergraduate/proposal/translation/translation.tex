@@ -92,11 +92,11 @@
 \end{equation}
 总体上，$N$阶项的动力学演化方程中会出现 $N+1$阶项。从(\ref{Ehrenfestqp})及(\ref{EhrenfestP2})二式来看，当$M>2$时二阶项的期望值依赖于更高阶的项。结论同样适用于高于二阶的项。
 
-不同的相空间变量组能够用来建立耦合的动力学方程。Prezhdo展现了即时的坐标及动量的平均值可以推出简化的动力学方程。同样地，我们选择 $\mu_q=\langle q \rangle $,$\mu_p = \langle p \rangle $,$\sigma_q = \sqrt{\langle (q-\mu_q)^2 \rangle }$, 以及$\sigma_p = \sqrt{\langle (p-\mu_p)^2 \rangle }$并定义不含单位的坐标及动量 $\tilde{q}=\left(q-\mu_{q}\right) / \sigma_{q}$以及 $\tilde{p}=\left(p-\mu_{p}\right) / \sigma_{p}$,这样能够使数值计算更为方便。那么 $\tilde{q}^{i} \tilde{p}^{j}$可替代 $q^{i} p^{j}$.其期望值，$\xi_{i j}=\left\langle\tilde{q}^{i} \tilde{p}^{j}\right\rangle$,具有性质 $\xi_{00}=1, \xi_{10}=\xi_{01}=0$，以及 $\xi_{20}=\xi_{02}=1$.从式(12-hardcoded)我们可以用$\tilde{q}$的多项式表达 $V$ 
+不同的相空间变量组能够用来建立耦合的动力学方程。Prezhdo展现了即时的坐标及动量的平均值可以推出简化的动力学方程。同样地，我们选择 $\mu_q=\langle q \rangle $,\,$\mu_p = \langle p \rangle $,\,$\sigma_q = \sqrt{\langle (q-\mu_q)^2 \rangle }$, 以及$\sigma_p = \sqrt{\langle (p-\mu_p)^2 \rangle }$并定义不含单位的坐标及动量 $\tilde{q}=\left(q-\mu_{q}\right) / \sigma_{q}$以及 $\tilde{p}=\left(p-\mu_{p}\right) / \sigma_{p}$,这样能够使数值计算更为方便。那么 $\tilde{q}^{i} \tilde{p}^{j}$可替代 $q^{i} p^{j}$.其期望值，$\xi_{i j}=\left\langle\tilde{q}^{i} \tilde{p}^{j}\right\rangle$,具有性质 $\xi_{00}=1, \xi_{10}=\xi_{01}=0$，以及 $\xi_{20}=\xi_{02}=1$.从式(\ref{Polypotential})我们可以用$\tilde{q}$的多项式表达 $V$ 
 \begin{equation}
 	V(\tilde{q})=\sum_{k=0}^{M} b_{k} \tilde{q}^{k}
 \end{equation}
-令$b_{k}=\sum_{l=k}^{M} C_{l}^{k} \mu_{q}^{l-k} \sigma_{q}^{k} a_{l}$以及 $C_{m}^{n}=m ! /[n !(m-n) !]$.将上式应用到式(6-hardcoded)得到完整的一系列耦合动力学方程
+令$b_{k}=\sum_{l=k}^{M} C_{l}^{k} \mu_{q}^{l-k} \sigma_{q}^{k} a_{l}$以及 $C_{m}^{n}=m ! /[n !(m-n) !]$.将上式应用到式(\ref{Moyalgeneral})得到完整的一系列耦合动力学方程
 \begin{equation}
 	\frac{d}{d t} \mu_{q}=\frac{\mu_{p}}{m}
 	\label{muq}
@@ -114,7 +114,18 @@
 	\begin{aligned} \frac{d}{d t} \xi_{i j}=& \alpha \xi_{i j}+\beta \xi_{i-1, j+1}+\gamma \xi_{i, j-1} \\ &+\sum_{k=0}^{K} \sum_{j=1}^{M} \eta_{k l} \xi_{i-2 k-1+l+l, j-2 k-1} \end{aligned}
 	\label{dimensionless}
 \end{equation}
-其中我们引入了符号$\alpha=-j \chi / \sigma_{p}-i \xi_{11} \sigma_{p} / (m\sigma_q)$,$\beta=i \sigma_{p} /\left(m \sigma_{q}\right), \gamma=-j \lambda / \sigma_{p}, \eta_{k l}=(-1)^{k+1} b_{l}\hbar^{2 k} C_{j}^{2 k+1} A_{l}^{2 k+1} /\left(2^{2 k} \sigma_{p}^{2 k+1} \sigma_{q}^{2 k+1}\right),$ $\lambda=-\sum_{k=1}^{M} k b_{k} \xi_{k-1,0} / \sigma_{q},$ $\chi=-\sum_{k=1}^{M} k b_{k} \xi_{k-1,1} / \sigma_{q}$ 以及$A_{m}^{n}=m ! /(m-n) !$来对公式进行简化，而 $K$为不大于 $(\min \{j, M\}-1) / 2$的最大整数。从公式(21-hardcoded)，我们可以看出任意$i+j$阶变量$\xi_{ij}$ 依赖于变量$\xi_{kl}$，其最高阶项为 $i+j+M-2$.
+其中我们引入了符号
+\begin{equation*}
+	\begin{cases}
+	\alpha=-j \chi / \sigma_{p}-i \xi_{11} \sigma_{p} / (m\sigma_q),\\
+	\beta=i \sigma_{p} /\left(m \sigma_{q}\right),\\
+	 \gamma=-j \lambda / \sigma_{p}, \\
+	 \eta_{k l}=(-1)^{k+1} b_{l}\hbar^{2 k} C_{j}^{2 k+1} A_{l}^{2 k+1} /\left(2^{2 k} \sigma_{p}^{2 k+1} \sigma_{q}^{2 k+1}\right),\\
+	 \lambda=-\sum_{k=1}^{M} k b_{k} \xi_{k-1,0} / \sigma_{q}, \\
+	 \chi=-\sum_{k=1}^{M} k b_{k} \xi_{k-1,1} / \sigma_{q} 
+	\end{cases}
+\end{equation*}
+以及$A_{m}^{n}=m ! /(m-n) !$来对公式进行简化，而 $K$为不大于 $(\min \{j, M\}-1) / 2$的最大整数。从公式(\ref{dimensionless})，我们可以看出任意$i+j$阶变量$\xi_{ij}$ 依赖于变量$\xi_{kl}$，其最高阶项为 $i+j+M-2$.
 
 \subsection{动力学方程截断}
 对$M>2$的势能多项式，无穷数量的耦合动力学方程需要通过使用低阶量对高阶量进行拟合来截断。在本文中，我们使用(\ref{muq})-(\ref{dimensionless})得到前$N$阶的含时演化方程，并使用$P_N(q,p)$进行截断。我们的方法为利用低阶量获得$P_N(q,p)$的表达式，并利用该表达式计算估计的高阶量。一般地，我们可以将$P_N(q,p)$表达为基组的线性展开
@@ -132,10 +143,16 @@
 公式(\ref{basis_expansion})中的基组函数可选择不同形式。利用从简谐振子的特征解获得的灵感，我们使用高斯基组
 \begin{equation}
 	f_{k l}(q, p)=f(q, p) \tilde{q}^{k} \tilde{p}^{l}
+	\label{dimenstionless_phasespace}
 \end{equation}
-其中$f(q, p)=\exp \left\{-\left[\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)/\left.\left.\left(\sigma_{q} \sigma_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}\right] /\left[2\left(1-\rho^{2}\right)\right]\right\} /\left[2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}\right]$为相关系数为$\rho = \xi_{11}$的标准双变量正态分布。那么公式(\ref{xi_ij})中的矩阵元变为$M_{i j, k l}=\int f(q, p) \tilde{q}^{i+k} \tilde{p}^{j+l} d q d p$，而其可基于Wick定理进行计算，即若$i+j+k+l$为奇数，$M_{ij,kl}$永远为零;否则，我们有
+其中
+\begin{equation*}
+f(q, p)=\frac{\exp \left\{-\frac{\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)/\left.\left.\left(\sigma_{q} \sigma_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}}{2\left(1-\rho^{2}\right)}\right\}}{2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}}
+\end{equation*}
+为相关系数为$\rho = \xi_{11}$的标准双变量正态分布。那么公式(\ref{xi_ij})中的矩阵元变为$M_{i j, k l}=\int f(q, p) \tilde{q}^{i+k} \tilde{p}^{j+l} d q d p$，而其可基于Wick定理进行计算，即若$i+j+k+l$为奇数，$M_{ij,kl}$永远为零;否则，我们有
 \begin{equation}
 	M_{i j, k l}=\sum_{n=0}^{I} \rho^{a-2 n} C_{a}^{2 n} A_{b}^{a-2 n}(2 n-1) ! !(b-a+2 n-1) ! !
+	\label{matrixelement}
 \end{equation}
 该式只依赖于$a = \min \{i + k, j + l\}$及$b = \max \{i+k, j+l\}$. $I$为不超过$a/2$的最大整数。由此我们可以将$(N+1)(N+2)/2$个线性方程组分解为两个子系统：一个具有奇数的$i+j$和$k+l$，另一个具有偶数的$i+j$和$k+l$.
 
@@ -146,8 +163,12 @@
 	\begin{equation}
 		\psi(q)=\left(\frac{m \omega}{\pi \hbar}\right)^{1 / 4} \exp \left[-\frac{m \omega\left(q-q_{0}\right)^{2}}{2 \hbar}+i \frac{p_{0} q}{\hbar}\right]
 	\end{equation}
-	利用维格纳变换，我们得到对应的相空间分布$P(q,p) = \exp \left\{-\left[\left(q-\mu_{q}\right)^{2} /\left(2 \sigma_{q}^{2}\right)+\left(p-\mu_{p}\right)^{2} /\left(2 \sigma_{p}^{2}\right)\right]\right\} / (2\pi \sigma_q \sigma_p)$. 此时，我们可以轻易地计算相空间期望值$\mu_{q}=q_{0}, \mu_{p}=p_{0}, \sigma_{q}=\sqrt{\hbar /(2 m \omega)},\rho=0$, and $\sigma_p = \sqrt{m\hbar \omega /2 }$. 若$i$和$j$同时为偶数，$\xi_{ij} = (i-1)!!(j-1)!!$; 否则在$t=0$时$\xi_{ij} = 0$.
-	\item 在每个$t$时刻，我们利用四阶隆格-库塔法计算经过$dt$时间间隔后的SMD的各变量。此时，我们先计算矩阵$M_{i j, k l}$.对公式（24-hardcoded)中的基组函数，若$i+j+k+l$为偶数则$M_{ij,kl}$满足公式(25-hardcoded)，否则为零。利用公式(23-hardcoded)所提供的$0\leq i + j \leq N$的线性方程，我们得到$\{c_{kl}\}$以及相应的辅助相空间分布，$P_N(q,p)$.而后我们利用公式(23-hardcoded)计算$N+1\leq i+j \leq N+M-2$ 下的 $\{\xi_ij\}$的值并接入公式(17-hardcoded)-(21-hardcoded)中的等式右边得到完整的微分方程。该步骤一直重复至满足某一个先决条件。
+	利用维格纳变换，我们得到对应的相空间分布
+	\begin{equation*}
+	P(q,p) = \exp \left\{-\left[\left(q-\mu_{q}\right)^{2} /\left(2 \sigma_{q}^{2}\right)+\left(p-\mu_{p}\right)^{2} /\left(2 \sigma_{p}^{2}\right)\right]\right\} / (2\pi \sigma_q \sigma_p).
+	\end{equation*}
+	 此时，我们可以轻易地计算相空间期望值$\mu_{q}=q_{0}, \,\mu_{p}=p_{0},\, \sigma_{q}=\sqrt{\hbar /(2 m \omega)},\,$ $\rho=0,\,$以及$\sigma_p = \sqrt{m\hbar \omega /2 }$. 若$i$和$j$同时为偶数，$\xi_{ij} = (i-1)!!(j-1)!!$; 否则在$t=0$时$\xi_{ij} = 0$.
+	\item 在每个$t$时刻，我们利用四阶隆格-库塔法计算经过$dt$时间间隔后的SMD的各变量。此时，我们先计算矩阵$M_{i j, k l}$.对公式(\ref{dimenstionless_phasespace})中的基组函数，若$i+j+k+l$为偶数则$M_{ij,kl}$满足公式(\ref{matrixelement})，否则为零。利用公式(\ref{xi_ij})所提供的$0\leq i + j \leq N$的线性方程，我们得到$\{c_{kl}\}$以及相应的辅助相空间分布，$P_N(q,p)$.而后我们利用公式(\ref{xi_ij})计算$N+1\leq i+j \leq N+M-2$ 下的 $\{\xi_ij\}$的值并接入公式(\ref{muq})-(\ref{dimensionless})中的等式右边得到完整的微分方程。该步骤一直重复至满足某一个先决条件。
 	\item 对任意一个可观察量$A(p,q)$，其期望值的含时演化通过含时辅助相空间分布计算得到：
 	\begin{equation}
 		\langle A(p, q, t)\rangle=\int A(p, q) P_{N}(x, p, t) d q d p
@@ -155,7 +176,7 @@
 	由此，我们便得到了一个完整的建立在有限数量的期望值的半经典动力学方法。
 \end{enumerate}
 \subsection{QHD与SMD之间的关系}
-与QHD-1相似，SMD-1提供了经典力学体系下的哈密顿方程（见附录 A-hardcoded)。对SMD-2,方程(23-hardcoded)转化为一个奇数和偶数的线性方程子系统：
+与QHD-1相似，SMD-1提供了经典力学体系下的哈密顿方程(见附录A)。对SMD-2,方程(\ref{xi_ij})转化为一个奇数和偶数的线性方程子系统：
 \begin{equation}
 	\left[\begin{array}{ll}
 {1} & {\rho} \\
@@ -187,5 +208,63 @@
 {\rho}
 \end{array}\right]
 \end{equation}
-其解为$c_{00} = 1$ 和 $c_{10}=c_{01}=c_{20}=c_{02}=c_{11}=0$, 从而给出和二阶QCD相同的相空间分布。从方程(23-hardcoded)，SMD截断变为$\xi_{i j} \approx M_{i j, 00}$. 此时，$\xi_{04}=\xi_{40} \approx 3, \xi_{22} \approx 1+2 \rho^{2}$,以及$\xi_{13}=\xi_{31} \approx 3 \rho$, 同时所有第三阶和第五阶期望值为零。相比之下，QHD的截断方法同样保证了第三阶和第五阶的$\left\langle\tilde{q}^{i} \tilde{p}^{j}\right\rangle$在QHD中被估计为$\left\langle\tilde{p}^{4}\right\rangle \approx 3\left\langle\tilde{p}^{2}\right\rangle\left\langle\tilde{p}^{2}\right\rangle= 3$, $\left\langle\tilde{q}^{4}\right\rangle \approx 3\left\langle\tilde{q}^{2}\right\rangle\left\langle\tilde{q}^{2}\right\rangle= 3$, $\left\langle\tilde{q}^{2} \tilde{p}^{2}\right\rangle \approx\left\langle\tilde{q}^{2}\right\rangle\left\langle\tilde{p}^{2}\right\rangle+ 2\langle\tilde{q} \tilde{p}\rangle\langle\tilde{q} \tilde{p}\rangle= 1+2 \rho^{2}$, $\left\langle\tilde{q} \tilde{p}^{3}\right\rangle \approx 3\langle\tilde{q} \tilde{p}\rangle\left\langle\tilde{p}^{2}\right\rangle = 3 \rho$, 以及$\left\langle\tilde{q}^{3} \tilde{p}\right\rangle \approx 3\left\langle\tilde{q}^{2}\right\rangle\langle\tilde{q} \tilde{p}\rangle= 3 \rho$，这和我们的在相空间得到的结果相一致。事实上，我们仔细验证了SMD-3和SMD-4中的所有低于五阶的截断方程。
+其解为$c_{00} = 1$ 和 $c_{10}=c_{01}=c_{20}=c_{02}=c_{11}=0$, 从而给出和二阶QCD相同的相空间分布。从方程(\ref{xi_ij})，SMD截断变为$\xi_{i j} \approx M_{i j, 00}$. 此时，$\xi_{04}=\xi_{40} \approx 3, \xi_{22} \approx 1+2 \rho^{2}$,以及$\xi_{13}=\xi_{31} \approx 3 \rho$, 同时所有第三阶和第五阶期望值为零。相比之下，QHD的截断方法同样保证了第三阶和第五阶的$\left\langle\tilde{q}^{i} \tilde{p}^{j}\right\rangle$在QHD中被估计为$\left\langle\tilde{p}^{4}\right\rangle \approx 3\left\langle\tilde{p}^{2}\right\rangle\left\langle\tilde{p}^{2}\right\rangle= 3$, $\left\langle\tilde{q}^{4}\right\rangle \approx 3\left\langle\tilde{q}^{2}\right\rangle\left\langle\tilde{q}^{2}\right\rangle= 3$, $\left\langle\tilde{q}^{2} \tilde{p}^{2}\right\rangle \approx\left\langle\tilde{q}^{2}\right\rangle\left\langle\tilde{p}^{2}\right\rangle+ 2\langle\tilde{q} \tilde{p}\rangle\langle\tilde{q} \tilde{p}\rangle= 1+2 \rho^{2}$, $\left\langle\tilde{q} \tilde{p}^{3}\right\rangle \approx 3\langle\tilde{q} \tilde{p}\rangle\left\langle\tilde{p}^{2}\right\rangle = 3 \rho$, 以及$\left\langle\tilde{q}^{3} \tilde{p}\right\rangle \approx 3\left\langle\tilde{q}^{2}\right\rangle\langle\tilde{q} \tilde{p}\rangle= 3 \rho$，这和我们的在相空间得到的结果相一致。事实上，我们仔细验证了SMD-3和SMD-4中的所有低于五阶的截断方程。我们利用(\ref{basis_expansion})和(\ref{dimenstionless_phasespace})得到的截断方法一直都和Prezhdo提出的QHD截断结果相一致。值得一提的是更高阶的QHD截断由于非常复杂的化简公式没有给出（见附录B），而在相空间体系下任意阶的截断方程可利用上述公式轻松实现。因此，现有的SMD方法能够提供量子化的哈密顿动力学的精确描述。
+
+\section{结果与讨论}
+SMD方法被应用于研究三个一维模型体系，各自采用不同的势能面：(A)三次方势能，(B)摩尔斯势，(C)双势阱。A模型为在文献中被深入研究的系统，其中量子隧穿效应起到了很重要的作用。在这里，我们使用该模型来将我们的SMD方法和QHD的结果进行对比。模型B与C为更为复杂的系统，我们通过对高于五阶的变量进行截断来得到对动力学更好的描述。在这两个模型中，SMD的结果与精确的量子动力学结果DVR方法进行了比较。DVR的时间间隔被选定为哈密顿矩阵的光谱半径的倒数。在以下计算中，若另未声明皆使用原子单位制。
+
+\subsection{亚稳态三阶势能下的衰变}
+我们研究的第一个模型为三阶势能，
+\begin{equation}
+	V(q)=q^{2} / 2+q^{3} / 6
+\end{equation}
+该模型模拟了电子从一个亚稳态以隧穿形式脱离的过程。质量被设定为1.在$q=0$附近，势能能够被近似描述为简谐势能$V(q)=q^2/2$，其对应的基态被用来作为初始波函数，
+\begin{equation}
+	\psi(q)=\pi^{-1 / 4} \exp \left(-q^{2} / 2\right)
+\end{equation}
+势能面和初始实空间分布展现于图 (1(a)).该亚稳态被设计为只能通过隧穿的形式脱离。该模型曾被Prezhdo和Pahl系统研究过。研究证明将截断阶数从二阶提升至四阶能够显著提升QHD的精度。在图 (1(b))中，我们展现了SMD的数值结果。我们使用0.1 a.u.的时间元来得到收敛的结果。其截断基于方程(22)与(24)所述辅助相空间分布得到。显然，SMD的截断方式能够给出和同阶的QHD完全相同的结果。
+
+
+\subsection{摩尔斯势能下的振动}
+第二个模型为摩尔斯势能（见图 (2(a))），
+\begin{equation}
+	\psi(q)=\pi^{-1 / 4} \exp \left(-q^{2} / 2\right)
+\end{equation}
+其中$a=4.419 \, \mathrm{eV},\, b = 2.567 \AA ^{-1}$, 以及 $m=1836$.其被设计为描述在水分子中氧和氢的非简谐振动。与A模型相似，初始波函数被设定为在势能最低点处的近似简谐势能对应的基态。为处理这样的非多项式势能，我们利用了Prezhdo和Pereverzev提出的固定框架近似，即我们将摩尔斯势进行泰勒展开，
+\begin{equation}
+	V(q) \approx \sum_{n=0}^{M} \frac{1}{n !} V_{q}^{(n)}(0) q^{n}
+\end{equation}
+其中$V_{q}^{(n)}$ 为势能关于坐标的$n$阶导。使用更高数值的$M$能够得到更好的结果。
+
+在图 (2(b))和(2(c))中，我们展现了SMD-2的平均位移和平均动量的含时演化。相比于模型A，更大的质量允许我们使用更长的时间元$dt=10\,\mathrm{a.u.}$进行动力学模拟。作为对比，DVR的结果使用了范围为$[-0.76,2.00]$,间隔为0.01的格点。我们可以发现增大$M$能够显著提升精度。$M=6$下的SMD-2能够或多或少提供收敛于DVR的结果。我们知道在$SMD-N$中势能最高阶$M$下的最高无单位变量截断为$N+M-2$。因此，在这里最高阶截断为第六阶，超过了在文献中使用的五阶截断。相比之下，现有的SMD方法能够得到令人满意的动力学模拟结果。在图(2(b))和(2(c))中，我们同时展现了经典MD的结果。由于我们初始条件的选择，粒子被固定在了原点。因此，该动力学演化完全是量子效应的结果。
+
+\subsection{双势阱下的势垒穿越}
+在第三个模型中，我们考虑一个对称的双陷阱势能（见图(3(a))）
+\begin{equation}
+	V(q)=a q^{2}+b q^{4}
+\end{equation}
+其中$a=-3 \times 10^{-4}, b=2.4 \times 10^{-5}, \text { 以及 } m=1836$.设计初衷为势垒高度约为$k_B T$，其中$k_B$为玻尔兹曼常数，$T$为室温。两个局部最小值的距离为$5 \, \mathrm{a.u.}$，是非常典型的分子间距离。初始波函数被选定为在左边的势阱最低点
+\begin{equation}
+	\psi(q)=(2 \pi d)^{-1 / 4} \exp \left[-\left(q-q_{0}\right)^{2} /(4 d)+i p_{0} q\right]
+\end{equation}
+其中$d=0.25$, $q_0=-2.5$,以及$p_0=2$.在DVR计算中，我们考虑一个在$[-10,10]$范围内，0.05为间隔的格点。在图(3(b))中，我们研究了在$dt=10 \, \mathrm{a.u.}$下的相空间轨迹。SMD阶数的增多能够促进系统级的轨迹的收敛性的提升，同时SMD-10能够定量复现DVR的结果。在该模型中，最高的变量截断为12阶，而该截断在希尔波特空间中很难实现。相比之下，经典的MD结果与量子力学体系下的结果截然不同。为了更好地对SMD进行评估，我们同时研究了二阶变量的含时演化（见图(4)）。再一次地，SMD的结果在所有情况下通过提高阶数能系统性地收敛于量子精确解。
+
+最后，我们指出SMD提供了一个研究半经典动力学的非常灵活的理论框架。在现有的研究中，我们使用了无单位的变量，辅助相空间分布的线性展开，以及一个高斯型函数基组来测试SMD的能力。在这些选择下的低阶SMD能够浮现传统QHD的结果。然而SMD的框架能够对调整含时演化的变量组和帮助截断的辅助相空间分布提供非常大的灵活性。因此，SMD在处理复杂动力学问题时具有超过已有的以期望值为基础的方法的能力。同时，我们使用一维多项式是能作为例子来展现SMD的流程。广义上的势能同样可以按照类似的方法进行研究。随着维度的增多计算成本可能会由于更多的变量而显著增加，因此需要开发更为高效的流程。初始构型同样可能对动力学具有重大影响。如果考虑热力学系统，可以对简谐振子使用简单的量子初始条件。相关研究仍在进行中。
+
+\section{结论}
+作为总结，我们将传统的QHD方法衍生到了相空间系统。对应的半经典SMD方法在简洁性，一般性以及灵活性上显示出了巨大的优势。为推导动力学方程而必需的繁琐的Weyl对称化以及算符代数不再被需要，同时SMD提供了一个系统的变量截断方法。我们采用了一系列变量以及辅助相空间分布来刻画SMD的能力。通过三个模型系统作为示例，我们展现了低阶SMD能够复现QHD的结果，同时高阶SMD能够系统性地收敛至DVR提供的量子精确解。因此，SMD对未来更好的半经典以及混合量子经典动力学方法提供了一个基础框架。
+
+% \section*{一阶SMD及哈密顿动力学}
+% 在SMD-1中，所有变量只有$\mu_q$与$\mu_p$,分别代表$q$和$p$的平均值。对应的动力学方程由方程(17-hardcoded)和(18-hardcoded)给出。$\mu_p$对时间的偏导为$\lambda=-\sum_{k=1}^{M} \sum_{l=k}^{M} k C_{l}^{k} \mu_{q}^{l-k} \sigma_{q}^{k-1} a_{l} \xi_{k-1,0}$.在经典极限下，$\sigma_q\rightarrow 0$因此$k$的和必须为$1$.我们有$\lambda \rightarrow-\sum_{l=1}^{M} l \mu_{q}^{l-1} a_{l}$
+
+% \begin{equation}
+% 	\begin{aligned}
+% I_{221}=&\langle A B\rangle\langle C D\rangle\langle E\rangle+\langle A B\rangle\langle C E\rangle\langle D\rangle+\langle A B\rangle\langle D E\rangle\langle C\rangle \\
+% &+\langle A C\rangle\langle B D\rangle\langle E\rangle+\langle A C\rangle\langle B E\rangle\langle D\rangle+\langle A C\rangle\langle D E\rangle\langle B\rangle \\
+% &+\langle A D\rangle\langle B C\rangle\langle E\rangle+\langle A D\rangle\langle B E\rangle\langle C\rangle+\langle A D\rangle\langle C E\rangle\langle B\rangle \\
+% &+\langle A E\rangle\langle B C\rangle\langle D\rangle+\langle A D\rangle\langle B D\rangle\langle C\rangle+\langle A D\rangle\langle C E\rangle\langle B\rangle \\
+% &+\langle B C\rangle\langle D E\rangle\langle A\rangle+\langle B D\rangle\langle C E\rangle\langle A\rangle+\langle B E\rangle\langle C D\rangle\langle A\rangle
+% \end{aligned}
+% \end{equation}
+
 \end{document}
