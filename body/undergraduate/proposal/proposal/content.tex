@@ -1,6 +1,30 @@
 \section{项目的主要内容和技术路线}
 
 \subsection{主要研究内容}
+对初始波函数使用Wigner变换，即
+\begin{equation}
+	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / h}
+\end{equation}
+
+若初始波函数具有多项式高斯函数的形式，即
+\begin{equation}
+	G(\boldsymbol{X}) = \mathcal{L}(\boldsymbol{X}) \exp{ \left( - \frac{1}{2} \boldsymbol{X}^T \mathcal{A} \boldsymbol{X} + \boldsymbol{B} \boldsymbol{X}\right)   }	
+\end{equation}
+其中$\mathcal{L}(\boldsymbol{X})$为以$\boldsymbol{X}$中所有变量$\{x_i\}$表达的多项式，$\mathcal{A}$为高斯函数部分的二次项，$\boldsymbol{B}$为高斯函数部分的一次项。则对应的在相空间中的分布满足
+\begin{equation}
+	\begin{aligned}
+	P(\boldsymbol{X};\boldsymbol{P}) = \left( \frac{1}{\hbar \pi} \right) ^n e^{-\boldsymbol{X}^T \mathcal{A} \boldsymbol{X}} e^{2\boldsymbol{B}^T\boldsymbol{X}} N(\mathcal{D}) \det \mathcal{U}\times \\
+\mathcal{L}\left(\boldsymbol{X} - \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\mathcal{L}\left(\boldsymbol{X} + \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\exp \left( - \boldsymbol{P}^T \mathcal{U} \mathcal{D}' \mathcal{U}^T \boldsymbol{P} \right)  
+\end{aligned}
+\end{equation} 
+其中$\mathcal{D}$为$\mathcal{A}$进行对角化后得到的矩阵，$\mathcal{U}$为对应的线性变换矩阵，即
+ \begin{equation}
+	 \begin{cases}
+	 \mathcal{A} = \mathcal{U} \mathcal{D} \mathcal{U}^T\\
+	 \mathcal{D} = \diag\left( \lambda_1, \lambda_2, ..., \lambda_n \right) 
+         \end{cases}
+\end{equation} 
+
 
 \subsection{技术路线}
 

@@ -1,10 +1,13 @@
-\cleardoublestylepage{empty}
+\newpage
 \thispagestyle{empty}
-
+\mbox{}
+\newpage
 \ifthenelse{\equal{\Type}{design}}
 {
     \inputpage{proposal/design/previous}
+    \pagestyle{common}
 }
 {
     \inputpage{proposal/thesis/previous}
+    \pagestyle{common}
 }

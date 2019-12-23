@@ -47,7 +47,7 @@
         \newcommand{\TitleTypeName}{浙江大学本科生毕业论文}
     }
     {
-        \newcommand{\TitleTypeName}{浙江大学本科生毕业设计}
+        \newcommand{\TitleTypeName}{浙江大学本科生毕业论文（设计）}
     }
 }
 {
