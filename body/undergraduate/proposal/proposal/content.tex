@@ -3,18 +3,18 @@
 \subsection{主要研究内容}
 对初始波函数使用Wigner变换，即
 \begin{equation}
-	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / h}
+	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
 \end{equation}
 
 若初始波函数具有多项式高斯函数的形式，即
 \begin{equation}
 	G(\boldsymbol{X}) = \mathcal{L}(\boldsymbol{X}) \exp{ \left( - \frac{1}{2} \boldsymbol{X}^T \mathcal{A} \boldsymbol{X} + \boldsymbol{B} \boldsymbol{X}\right)   }	
 \end{equation}
-其中$\mathcal{L}(\boldsymbol{X})$为以$\boldsymbol{X}$中所有变量$\{x_i\}$表达的多项式，$\mathcal{A}$为高斯函数部分的二次项，$\boldsymbol{B}$为高斯函数部分的一次项。则对应的在相空间中的分布满足
+其中$\mathcal{L}(\boldsymbol{X})$为以$\boldsymbol{X}$中所有变量$\{x_i\}$表达的多项式，$\mathcal{A}$为高斯函数部分的二次项，$\boldsymbol{B}$为高斯函数部分的一次项。则对应的在相空间中的分布能够以解析的形式给出，
 \begin{equation}
 	\begin{aligned}
-	P(\boldsymbol{X};\boldsymbol{P}) = \left( \frac{1}{\hbar \pi} \right) ^n e^{-\boldsymbol{X}^T \mathcal{A} \boldsymbol{X}} e^{2\boldsymbol{B}^T\boldsymbol{X}} N(\mathcal{D}) \det \mathcal{U}\times \\
-\mathcal{L}\left(\boldsymbol{X} - \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\mathcal{L}\left(\boldsymbol{X} + \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\exp \left( - \boldsymbol{P}^T \mathcal{U} \mathcal{D}' \mathcal{U}^T \boldsymbol{P} \right)  
+		P(\boldsymbol{X};\boldsymbol{P}) =& \left( \frac{1}{\hbar \pi} \right) ^n e^{-\boldsymbol{X}^T \mathcal{A} \boldsymbol{X}} e^{2\boldsymbol{B}^T\boldsymbol{X}} \left(\det \mathcal{A'}\right)^{-\frac{1}{2}} \det \mathcal{U}\times \\
+	&\mathcal{L}\left(\boldsymbol{X} - i\mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\mathcal{L}\left(\boldsymbol{X} + i \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\exp \left( - \boldsymbol{P}^T \mathcal{A}'\boldsymbol{P} \right)  
 \end{aligned}
 \end{equation} 
 其中$\mathcal{D}$为$\mathcal{A}$进行对角化后得到的矩阵，$\mathcal{U}$为对应的线性变换矩阵，即
@@ -23,9 +23,50 @@
 	 \mathcal{A} = \mathcal{U} \mathcal{D} \mathcal{U}^T\\
 	 \mathcal{D} = \diag\left( \lambda_1, \lambda_2, ..., \lambda_n \right) 
          \end{cases}
+\end{equation}
+而$\mathcal{A}'$为高斯函数进行傅立叶变换后的结果，其形式满足
+ \begin{equation}
+\begin{cases}
+	\mathcal{A'} = \mathcal{U} \mathcal{D}' \mathcal{U}^T \\
+	\mathcal{D'} = \frac{1}{\hbar^2}\mathcal{D}^{-1} = \diag \left( \frac{1}{\lambda_1 \hbar^2}, \frac{1}{\lambda_2 \hbar^2}, ..., \frac{1}{\lambda_n \hbar ^2} \right) 
+\end{cases}
 \end{equation} 
+因此多项式高斯函数的相空间分布形式仍旧为多项式高斯函数。
 
+在具体的计算过程中，我们使用原子单位制，即$\hbar = 1$。
+
+利用Wigner分布得到相空间分布后，我们对相空间分布进行格点离散化，其方式模仿Arnaldo Donoso，Daniela Kohen 与Craig C. Martens 合箸的文章\cite{donoso2000simulation}：
+\begin{equation}
+\rho_{i j}(\Gamma, t)=\sum_{n=1}^{N} a_{n}^{(i j)}(t) \delta\left(\Gamma-\Gamma_{n}^{(i j)}(t)\right)
+\end{equation} 
+从而将相空间分布化简为多个互相之间不存在相互作用的粒子，而后对每个粒子进行单独演化。原文章只使用了最经典的分子动力学框架，即只使用泊松括号（Poisson's Bracket)对粒子进行演化，
+\begin{equation}
+	i \hbar \frac{\partial \hat{\rho}}{\partial t}=[\hat{H}, \hat{\rho}] \sim i \hbar\{A, B\}+O\left(\hbar^{3}\right)
+\end{equation}
+其中
+\begin{equation}
+	\{H, \rho\}=\frac{\partial H}{\partial q} \frac{\partial \rho}{\partial p}-\frac{\partial \rho}{\partial q} \frac{\partial H}{\partial p}
+\end{equation}
+因此该框架在含时演化过程中并不包含任何量子修正。因此我们考虑利用SMD框架对可观察量的变化进行修正，
+\begin{equation}
+	\frac{d}{d t}\langle A\rangle=\left\langle\frac{\partial A}{\partial t}\right\rangle+\langle\{\{A, H\}\}\rangle
+	\label{Ehrenfest_in_proposal}
+\end{equation}
+其中
+ \begin{equation}
+	 \{\{f, g\}\}=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g
+\end{equation}
+由此我们可以在含时演化过程中仍旧包含有量子修正，而如何实现这样的修正则为本次课题的重点。
 
 \subsection{技术路线}
+本次毕业论文所用程序依附于\emph{entos}的框架，该程序以C++14作为核心语言，其程序结构具有较大的灵活性，严谨的软件工程标准，同时实现了以任务为核心的多核并行计算框架\cite{Manby2019}。
 
 \subsection{可行性分析}
+在化学体系中电子由于原子核的束缚处于局域态，同时原子核由于其极大的质量亦处于局域态，满足的边界条件为在无穷远处波函数值为零，即
+\begin{equation}
+	| \psi \rangle \big|_{\boldsymbol{r}\rightarrow \infty} = 0
+\end{equation} 
+因此我们能够通过高斯函数或多项式高斯函数对电子结构或核的波函数进行拟合，正如正常电子结构中对电子波函数使用高斯函数拟合。而由于高斯函数能够给出解析的傅立叶变换，我们能够在进行初始Wigner变换的过程中不丢失对原来的初始波函数的信息。同时其高度局域的性质能使相空间的格点化或是采样的过程简化的同时减小精度损失。在原文献中\cite{LinjunSemiclassical}只采用了不含多项式的一维高斯函数，适用领域较小，而若利用多项式高斯函数的解析Wigner变换能够获得更广的应用场景，如单电子在三维体系下的演化。
+
+
+
