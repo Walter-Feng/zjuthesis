@@ -25,13 +25,101 @@
 
 \section{国内外研究现状}
 
-
-
 \subsection{研究方向及进展}
+量子哈密顿动力学（Quantum Hamiltonian Dynamics, QHD）最先开发出了以期望值为核心的半经典量子动力学的演化方法\cite{OlegQHD}。其采用一系列位置算符与动量算符的幂来描述一个系统在某一个时刻的状态，而非通过计算化学方法中常用的波函数来描述体系。在QHD体系中任意算符$A$的期望值的演化通过Ehrenfest定理来进行：
+\begin{equation}
+	\frac{d}{d t}\langle\hat{A}\rangle=\left\langle\frac{\partial}{\partial t} \hat{A}\right\rangle+\left\langle\frac{1}{i \hbar}[\hat{A}, \hat{H}]\right\rangle
+\end{equation}
+其中$[\cdot, \cdot]$为算符对易子，
+\begin{equation}
+	[\hat{A}, \hat{B}] \equiv \hat{A}\hat{B} - \hat{B} \hat{A}
+\end{equation}
+对于一阶项算符，即位置算符$X_j$和对应动量算符$P_j$，Ehrenfest定理直接对应了经典力学中的牛顿定律，
+\begin{equation}
+\begin{aligned}
+&\frac{d}{d t}\left\langle X_{j}\right\rangle_{\psi(t)}=\frac{1}{m_{j}}\left\langle P_{j}\right\rangle_{\psi(t)}\\
+&\frac{d}{d t}\left\langle P_{j}\right\rangle_{\psi(t)}=\left\langle-\frac{\partial V}{\partial x_{j}}\right\rangle_{\psi(t)}
+\end{aligned}
+\end{equation}
+这在狄拉克看来是由于在量子力学中的对易子即代表了经典力学中的泊松括号，在接近经典极限（$\hbar \rightarrow 0$）时对易子必须要转化成泊松括号\cite{dirac1981principles}。因此1阶QHD（QHD-1）与经典力学严格对应，而高阶项能够对经典力学演化加入量子力学修正，而若使用无穷数量的高阶项进行修正，则能够得到量子精确解，这正如同在概率论中通过无穷数量的中心矩估计能够推出整体的概率分布\cite{fisz2018probability}。
 
+而QHD方法的最主要问题在于动力学方程的推导的繁琐。由于整个演化过程采用希尔波特空间，位置算符与动量算符之间必须要满足不对易关系：
+\begin{equation}
+	\left[X_{r}, P_{s}\right]= i\hbar \delta_{r s}
+\end{equation}
+因此算符的乘积需要考虑算符的顺序，同时动量算符需表达为关于位置的偏导算符，
+\begin{equation}
+	P_j = - i \hbar \frac{\partial}{\partial X_j}
+\end{equation}
+从而给高阶动力学方程的推导造成了极大的麻烦。也正由于这样的原因，在现有的QHD以及其延伸方法中不存在高于五阶的计算。
+
+王林军老师和沈一帆在原有的量子哈密顿动力学的基础上发展出了相空间量子哈密顿动力学，即半经典磨雅动力学\cite{YifanShenPSQHD,LinjunSemiclassical}。该方法充分运用了Wigner发展出的相空间表象下的波函数表达方法，其最突出的特点在于相空间下的动量、位置算符的乘积与线性组合可直接等效于薛定谔方程下的算符写法而无需将转换成动量算符转化为关于位置算符的偏导的形式\cite{wigner1997quantum}，从而位置算符与动量算符对易，消除了算符序对于期望值的影响。同时Wigner也指出了在希尔波特空间下的波函数转换至相空间分布的方法，
+\begin{equation}
+	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
+\end{equation}
+而相空间下的动力学演化方程由磨雅（Moyal）提出的磨雅括号给出，
+\begin{equation}
+\begin{aligned}
+	 \{\{f, g\}\}&=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g  \\
+	 &=\{A, H\}+\sum_{j=1}^{\infty} \frac{(-1)^{j}}{(2 j+1) !}\left(\frac{\hbar}{2}\right)^{2 j} A\left[\sum_i\left(\overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)^{2 j+1}\right] H
+\end{aligned}
+\label{Moyal_review}
+\end{equation}
+其中$\{A, H\}$与经典力学中的泊松括号相对应，
+\begin{equation}
+	\{f, g\}=\frac{\partial f}{\partial q} \frac{\partial g}{\partial p}-\frac{\partial f}{\partial p} \frac{\partial g}{\partial q}
+\end{equation}
+而由于哈密顿量的存在，某一个由位置算符和动量算符的乘积组成的力学量$q^i p^j$会依赖于更高阶的量$q^k p^l$，即$k+l > i+j$.为得到更高阶的力学量，原文章采用了以系统位置，动量的期望值为中心的多项式高斯函数来拟合系统的相空间分布，
+\begin{equation}
+f_{k l}(q, p)=f(q, p) \tilde{q}^{k} \tilde{p}^{l}
+\end{equation}
+其中
+\begin{equation}
+	f(q, p)=\frac{\exp \left\{-\frac{\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}}{2\left(1-\rho^{2}\right)}\right\}}{2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}}
+\end{equation}
+该方案的最大问题在于高斯函数的单中心性质使量子力学中一些重要的性质，如退相干效应，量子反射等，无法得到描述\cite{YifanShenPSQHD}。顾锴在此基础上的一大改进方向为使用多中心基组，其中的一个例子便为多个不带有多项式的高斯函数的线性叠加，能够有效降低误差\cite{kaiguPSQHD}。然而继续沿用高斯函数作为辅助相空间分布总是或多或少地导致了数值不稳定性，本人猜测这部分来自于利用辅助相空间分布给出的高阶量近似并以此得出的各期望值演化与量子精确解给出的期望值演化之间的误差含有低于1阶的时间元项（详细讨论见下一节）。
+
+而顾锴的工作与Martens的工作都指出了经典分子动力学模拟相空间分布演化的出色的稳定性，而结果与量子精确解相比十分可观\cite{kaiguPSQHD,donoso2000simulation}。这首先依赖于最初的波函数体现出的量子效应——相较于普通的粒子，波函数存在着一定的展宽，从而能够对全空间有一个扫描的作用，也部分解释了隧穿效应这一重要的量子效应。同时从磨雅括号的形式可以看出经典力学项——泊松括号在演化中能够占主要部分，而在高阶量的参与由于$\left(\frac{\hbar}{2}\right)^{2j}$的放缩因子的存在而影响较小，从而能够与量子精确解十分接近。
 \subsection{存在问题}
+然而若需要通过SMD框架引入量子力学修正，则根据公式(\ref{Ehrenfest_in_proposal})，我们不能再次得到新的狄拉克函数——即狄拉克函数在量子力学框架下进行演化后不再是狄拉克函数。譬如，在一个简谐振子体系下哈密顿量表达式为
+\begin{equation}
+	\hat{H} = \frac{p^2}{2} + \frac{x^2}{2}
+\end{equation}
+其中质量和弹簧系数皆设为1.利用公式(\ref{Moyal_review})我们能够得到一阶项
+\begin{equation}
+	\begin{cases}
+	\frac{d }{dt}\langle x \rangle = \langle p \rangle \\
+	\frac{d }{dt}\langle p \rangle = - \langle x \rangle
+	\end{cases}
+\end{equation}
+对于一狄拉克函数$f(x,p) = \delta(x-x_0)\delta(p-p_0)$,若只考虑一阶项的演化，经过$dt$时间演化后的函数形式可解析得到为
+\begin{equation}
+f(x,p) \big|_{t=dt} = \delta(x-x_0 - p_0dt) \delta(p-p_0+x_0dt)
+\end{equation}
+我们定义通过狄拉克函数演化得到的各力学量$\xi$对时间的偏导与磨雅括号得到的各力学量随时间的偏导的差为$D(\xi)$，即
+\begin{equation}
+	D(\xi) \equiv \frac{\int \xi \, f(x,p) \big|_{t=dt} \, dx dp - \int \xi \, f(x,p) \big|_{t=0} \, dx dp }{dt} - \{\{\xi,\hat{H}\}\}
+\end{equation}
+在这里罗列二阶项，
+\begin{equation}
+	\begin{cases}
+		D(x^2) = p_0^2 dt \\
+		D(x p) = - x_0 p_0 dt \\
+		D(p^2) = x_0^2 dt
+	\end{cases}
+\end{equation}
+以及三阶项，
+\begin{equation}
+	\begin{cases}
+		D(x^3) = 3 p_0^2 x_0 dt + p_0^3 dt^2\\
+		D(x^2 p) = p_0^3 dt - 2 p_0 x_0^2 dt - x_0p_0^2 dt^2\\
+		D(x p^2) = x_0^3 dt + 2x_0 p_0^2 dt + p_0 x_0^2 dt^2 \\
+		D(p^3) = 3 p_0 x_0^2 dt - x_0^3 dt^2
+	\end{cases}
+\end{equation}
+该推导说明了在经过$dt$时间后每一个高于一阶的项都至少存在$dt$级别的误差，其间接说明了分子动力学模拟与全量子模拟之间的差距，以及狄拉克函数近似的一些缺陷。但由于这些高阶力学量只依赖于同阶力学量，同时最低阶的$dt$项为一阶，从而能够在长时间数值演化的情况下保持稳定;而由于辅助相空间的演化依赖于前一个时刻的高阶量，同时涉及矩阵求逆与高斯积分的过程，可能会含有低于一阶的$dt$项，从而导致长时间演化的数值不稳定性。
 
 \section{研究展望}
-
+通过对SMD框架修正下的分子动力学模拟进行系统研究，我们希望能够解决SMD方法的两大基本问题，即数值稳定性问题和多分支系统问题。为保证数值稳定性，我们可能需要充分发挥狄拉克函数在相空间优化中存在的优势，探讨尽可能的优化方法，使整体的力学量的误差达到最小，使演化结果能够进一步接近量子精确解。而若SMD框架下的粒子化相空间分布演化能够成立，那么将其拓展到多维系统几乎是没有代价的。我们能够利用类似的框架迅速应用于多维系统，观察该方法在更接近实际的系统中的表现。
 \newpage
 {\zihao{5}\songti\printbibliography[title={参考文献}]}
