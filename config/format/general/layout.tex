@@ -59,6 +59,7 @@
         \commonhead{}
         \fancyfoot{}
         \fancyfoot[OC,EC]{\zihao{-5}\Roman{page}}
+        \pagenumbering{Roman}
     }
 }
 {
@@ -139,18 +140,16 @@
 \renewcommand{\cftsubsecnumwidth}     {1.5em}
 \renewcommand{\cftsubsubsecnumwidth}  {1.5em}
 
+\setlength{\cftchapindent}      {0em}
+\setlength{\cftsecindent}       {2em}
+\setlength{\cftsubsecindent}    {4em}
+\setlength{\cftsubsubsecindent} {6em}
+
 \ifthenelse{\equal{\Degree}{undergraduate}}
 {
-    \setlength{\cftchapindent}      {0em}
-    \setlength{\cftsecindent}       {2em}
-    \setlength{\cftsubsecindent}    {4em}
-    \setlength{\cftsubsubsecindent} {6em}
+    %
 }
 {
-    \setlength{\cftchapindent}      {0em}
-    \setlength{\cftsecindent}       {2em}
-    \setlength{\cftsubsecindent}    {4em}
-    \setlength{\cftsubsubsecindent} {6em}
     \setlength{\cftbeforechapskip}  {0em}
 }
 
@@ -171,3 +170,40 @@
 }
 {}
 
+\newcommand{\coverstyle}
+{
+    \pagestyle{cover}
+}
+
+\newcommand{\prevstyle}
+{
+    \cleardoublepage{}
+    \thispagestyle{previous}
+    \pagestyle{previous}
+    \pagenumbering{Roman}
+    \setcounter{page}{1}
+    \numberingstyle{}
+}
+
+\newcommand{\bodystyle}
+{
+    \cleardoublepage{}
+    \thispagestyle{common}
+    \pagestyle{common}
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+}
+
+\newcommand{\poststyle}
+{
+    \cleardoublepage{}
+    \ifthenelse{\equal{\Degree}{graduate}}
+    {
+        \thispagestyle{common}
+        \pagestyle{common}
+    }
+    {
+        \thispagestyle{empty}
+        \pagestyle{empty}
+    }
+}
