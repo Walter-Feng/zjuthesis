@@ -246,3 +246,11 @@
 }
 }
 {}
+
+
+\AtBeginEnvironment{subappendices}{%
+\section*{附录}
+\addcontentsline{toc}{section}{附录}
+\counterwithin{figure}{subsection}
+\counterwithin{table}{subsection}
+}

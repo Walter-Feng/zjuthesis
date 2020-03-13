@@ -106,7 +106,8 @@
 	\label{muq}
 \end{equation}
 \begin{equation}
-	\frac{d}{d t} \mu_{q}=\frac{\mu_{p}}{m}
+	\frac{d}{d t} \mu_{p}= \lambda
+	\label{mup}
 \end{equation}
 \begin{equation}
 	\frac{d}{d t} \sigma_{q}=\frac{\sigma_{p} \xi_{11}}{m}
@@ -151,7 +152,7 @@
 \end{equation}
 其中
 \begin{equation*}
-f(q, p)=\frac{\exp \left\{-\frac{\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)/\left.\left.\left(\sigma_{q} \sigma_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}}{2\left(1-\rho^{2}\right)}\right\}}{2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}}
+f(q, p)=\frac{\exp \left\{-\frac{\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)/\left(\sigma_{q} \sigma_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}}{2\left(1-\rho^{2} \right)} \right\} }{2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}}
 \end{equation*}
 为相关系数为$\rho = \xi_{11}$的标准双变量正态分布。那么公式(\ref{xi_ij})中的矩阵元变为$M_{i j, k l}=\int f(q, p) \tilde{q}^{i+k} \tilde{p}^{j+l} d q d p$，而其可基于Wick定理进行计算，即若$i+j+k+l$为奇数，$M_{ij,kl}$永远为零;否则，我们有
 \begin{equation}
@@ -226,7 +227,7 @@ SMD方法被应用于研究三个一维模型体系，各自采用不同的势�
 \begin{equation}
 	\psi(q)=\pi^{-1 / 4} \exp \left(-q^{2} / 2\right)
 \end{equation}
-势能面和初始实空间分布展现于图 (1(a)).该亚稳态被设计为只能通过隧穿的形式脱离。该模型曾被Prezhdo和Pahl系统研究过。研究证明将截断阶数从二阶提升至四阶能够显著提升QHD的精度。在图 (1(b))中，我们展现了SMD的数值结果。我们使用0.1 a.u.的时间元来得到收敛的结果。其截断基于方程(22)与(24)所述辅助相空间分布得到。显然，SMD的截断方式能够给出和同阶的QHD完全相同的结果。
+势能面和初始实空间分布展现于图 (1(a)).该亚稳态被设计为只能通过隧穿的形式脱离。该模型曾被Prezhdo和Pahl系统研究过。研究证明将截断阶数从二阶提升至四阶能够显著提升QHD的精度。在图 (1(b))中，我们展现了SMD的数值结果。我们使用0.1 a.u.的时间元来得到收敛的结果。其截断基于方程(\ref{basis_expansion})与(\ref{dimensionless})所述辅助相空间分布得到。显然，SMD的截断方式能够给出和同阶的QHD完全相同的结果。
 
 
 \subsection{摩尔斯势能下的振动}
@@ -258,6 +259,89 @@ SMD方法被应用于研究三个一维模型体系，各自采用不同的势�
 \section{结论}
 作为总结，我们将传统的QHD方法衍生到了相空间系统。对应的半经典SMD方法在简洁性，一般性以及灵活性上显示出了巨大的优势。为推导动力学方程而必需的繁琐的Weyl对称化以及算符代数不再被需要，同时SMD提供了一个系统的变量截断方法。我们采用了一系列变量以及辅助相空间分布来刻画SMD的能力。通过三个模型系统作为示例，我们展现了低阶SMD能够复现QHD的结果，同时高阶SMD能够系统性地收敛至DVR提供的量子精确解。因此，SMD对未来更好的半经典以及混合量子经典动力学方法提供了一个基础框架。
 
+\appendix
+\subsection{第一阶SMD与哈密顿动力学}
+在SMD-1中，变量组只包含有$\mu_q$与$\mu_p$，分别代表$q$与$p$的平均值。对应的运动方程由式(\ref{muq})与(\ref{mup})给出。$\mu_p$对时间的偏导为
+\begin{equation*}
+\lambda=-\sum_{k=1}^{M} \sum_{l=k}^{M} k C_{l}^{k} \mu_{q}^{l-k} \sigma_{q}^{k-1} a_{l} \xi_{k-1,0}
+\end{equation*}
+在经典极限下，$\sigma_q \rightarrow 0$，因此在求和中$k$须为1.我们有$\lambda \rightarrow - \sum_{l=1}^{M} l \mu_q ^{l-1} a_l$，其等于$- V' (\mu_q)$. 那么SMD的动力学方程为
+\begin{equation}
+\frac{d}{d t} \mu_{q}=\frac{\mu_{p}}{m}
+\end{equation}
+\begin{equation}
+\frac{d}{d t} \mu_{p}=-V^{\prime}\left(\mu_{q}\right)
+\end{equation}
+其能重现经典力学下的哈密顿动力学方程
+\begin{equation}
+\frac{d}{d t} \mu_{q}=\frac{\partial H}{\partial \mu_{p}}
+\end{equation}
+\begin{equation}
+	\frac{d}{d t} \mu_{p}=-\frac{\partial H}{\partial \mu_{q}}
+\end{equation}
+其中哈密顿量$H = \mu_p^2 / 2m + V(\mu_q)$.对于更高阶的SMD，哈密顿动力学通过与其他量子力学产生的变量相耦合而被量子化。
+\subsection{已有的QHD截断方法}
+在QHD中，第三、四、五阶的平均值一般拆分为：
+\begin{equation}
+\langle A B C\rangle \approx I_{21}-2 I_{111}
+\label{B1}
+\end{equation}
+\begin{equation}
+	\langle A B C D\rangle \approx I_{31}+I_{22}-2 I_{211}+6 I_{1111}
+	\label{B2}
+\end{equation}
+\begin{equation}
+	\langle A B C D E\rangle \approx I_{41}+I_{32}-2 I_{311}-2 I_{221}+6 I_{2111}-24 I_{11111}
+	\label{B3}
+\end{equation}
+其中的拆分项被定义为
+\begin{equation}I_{21}=\langle A B\rangle\langle C\rangle+\langle A C\rangle\langle B\rangle+\langle B C\rangle\langle A\rangle\end{equation}
+\begin{equation}I_{111}=\langle A\rangle\langle B\rangle\langle C\rangle\end{equation}
+\begin{equation}I_{31}=\langle A B C\rangle\langle D\rangle+\langle A B D\rangle\langle C\rangle+\langle A C D\rangle\langle B\rangle+\langle B C D\rangle\langle A\rangle\end{equation}
+\begin{equation}I_{22}=\langle A B\rangle\langle C D\rangle+\langle A C\rangle\langle B D\rangle+\langle A D\rangle\langle B C\rangle\end{equation}
+\begin{equation}\begin{aligned}
+I_{211}=&\langle A B\rangle\langle C\rangle\langle D\rangle+\langle A C\rangle\langle B\rangle\langle D\rangle+\langle A D\rangle\langle B\rangle\langle C\rangle \\
+&+\langle B C\rangle\langle A\rangle\langle D\rangle+\langle B D\rangle\langle A\rangle\langle C\rangle+\langle C D\rangle\langle A\rangle\langle B\rangle
+\end{aligned}\end{equation}
+\begin{equation}I_{1111}=\langle A\rangle\langle B\rangle\langle C\rangle\langle D\rangle\end{equation}
+\begin{equation}\begin{aligned}
+I_{41}=&\langle A B C D\rangle\langle E\rangle+\langle A B C E\rangle\langle D\rangle+\langle A B D E\rangle\langle C\rangle \\
+&+\langle A C D E\rangle\langle B\rangle+\langle B C D E\rangle\langle A\rangle
+\end{aligned}\end{equation}
+\begin{equation}\begin{aligned}
+I_{32}=&\langle A B C\rangle\langle D E\rangle+\langle A B D\rangle\langle C E\rangle+\langle A B E\rangle\langle C D\rangle+\langle A C D\rangle\langle B E\rangle \\
+&+\langle A C E\rangle\langle B D\rangle+\langle A D E\rangle\langle B C\rangle+\langle B C D\rangle\langle A E\rangle \\
+&+\langle B C E\rangle\langle A D\rangle+\langle B D E\rangle\langle A C\rangle+\langle C D E\rangle\langle A B\rangle
+\label{B11}
+\end{aligned}\end{equation}
+\begin{equation}\begin{aligned}
+I_{311}=&\langle A B C\rangle\langle D\rangle\langle E\rangle+\langle A B D\rangle\langle C\rangle\langle E\rangle+\langle A B E\rangle\langle C\rangle\langle D\rangle \\
+&+\langle A C D\rangle\langle B\rangle\langle E\rangle+\langle A C E\rangle\langle B\rangle\langle D\rangle+\langle A D E\rangle\langle B\rangle\langle C\rangle \\
+&+\langle B C D\rangle\langle A\rangle\langle E\rangle+\langle B C E\rangle\langle A\rangle\langle D\rangle+\langle B D E\rangle\langle A\rangle\langle C\rangle \\
+&+\langle C D E\rangle\langle A\rangle\langle B\rangle
+\end{aligned}\end{equation}
+\begin{equation}\begin{aligned}
+I_{221}=&\langle A B\rangle\langle C D\rangle\langle E\rangle+\langle A B\rangle\langle C E\rangle\langle D\rangle+\langle A B\rangle\langle D E\rangle\langle C\rangle \\
+&+\langle A C\rangle\langle B D\rangle\langle E\rangle+\langle A C\rangle\langle B E\rangle\langle D\rangle+\langle A C\rangle\langle D E\rangle\langle B\rangle \\
+&+\langle A D\rangle\langle B C\rangle\langle E\rangle+\langle A D\rangle\langle B E\rangle\langle C\rangle+\langle A D\rangle\langle C E\rangle\langle B\rangle \\
+&+\langle A E\rangle\langle B C\rangle\langle D\rangle+\langle A E\rangle\langle B D\rangle\langle C\rangle+\langle A E\rangle\langle C D\rangle\langle B\rangle \\
+&+\langle B C\rangle\langle D E\rangle\langle A\rangle+\langle B D\rangle\langle C E\rangle\langle A\rangle+\langle B E\rangle\langle C D\rangle\langle A\rangle
+\end{aligned}\end{equation}
+\begin{equation}\begin{aligned}
+I_{2111}=&\langle A B\rangle\langle C\rangle\langle D\rangle\langle E\rangle+\langle A C\rangle\langle B\rangle\langle D\rangle\langle E\rangle+\langle A D\rangle\langle B\rangle\langle C\rangle\langle E\rangle \\
+&+\langle A E\rangle\langle B\rangle\langle C\rangle\langle D\rangle+\langle B C\rangle\langle A\rangle\langle D\rangle\langle E\rangle+\langle B D\rangle\langle A\rangle\langle C\rangle\langle E\rangle \\
+&+\langle B E\rangle\langle A\rangle\langle C\rangle\langle D\rangle+\langle C D\rangle\langle A\rangle\langle B\rangle\langle E\rangle+\langle C E\rangle\langle A\rangle\langle B\rangle\langle D\rangle \\
+&+\langle D E\rangle\langle A\rangle\langle B\rangle\langle C\rangle
+\end{aligned}\end{equation}
+\begin{equation}I_{11111}=\langle A\rangle\langle B\rangle\langle C\rangle\langle D\rangle\langle E\rangle\end{equation}
+这些方程为算符的期望值的推导。然而，这些同样能用于相空间下的变量的平均值。若一阶平均值为零，式(\ref{B1})至式(\ref{B3})可以被简化为：
+\begin{equation}\langle A B C\rangle \approx 0 \label{B16}\end{equation}
+\begin{equation}\langle A B C D\rangle \approx I_{22}\end{equation}
+\begin{equation}\langle A B C D E\rangle \approx I_{32}\label{B18}\end{equation}
+基于式(\ref{B11})与式(\ref{B16})，我们有$I_{32} \approx 0$而式(\ref{B18})变为
+\begin{equation}\langle A B C D E\rangle \approx 0\end{equation}
+因此，若第一阶平均值为0则第三阶及第五阶平均值均为零。
+
 % \section*{一阶SMD及哈密顿动力学}
 % 在SMD-1中，所有变量只有$\mu_q$与$\mu_p$,分别代表$q$和$p$的平均值。对应的动力学方程由方程(17-hardcoded)和(18-hardcoded)给出。$\mu_p$对时间的偏导为$\lambda=-\sum_{k=1}^{M} \sum_{l=k}^{M} k C_{l}^{k} \mu_{q}^{l-k} \sigma_{q}^{k-1} a_{l} \xi_{k-1,0}$.在经典极限下，$\sigma_q\rightarrow 0$因此$k$的和必须为$1$.我们有$\lambda \rightarrow-\sum_{l=1}^{M} l \mu_{q}^{l-1} a_{l}$
 
@@ -286,7 +370,6 @@ SMD方法被应用于研究三个一维模型体系，各自采用不同的势�
     ]{original.pdf}
 \end{center}
 {
-\\[1em]
 {\zihao{3}\bfseries 毕业论文（设计）文献综述和开题报告考核}\\[1em]
 {\zihao{4}\bfseries 对文献综述、外文翻译和开题报告评语及成绩评定}
 \vfill
@@ -300,7 +383,7 @@ SMD方法被应用于研究三个一维模型体系，各自采用不同的势�
 \textbf{成绩比例} & \makecell{\bfseries\zihao{5} 文献综述 \\ \zihao{5}\bfseries 占（10\%）} & \makecell{\bfseries\zihao{5} 开题报告 \\ \zihao{5}\bfseries 占（15\%）} & \makecell{\zihao{5} \bfseries 外文翻译 \\ \zihao{5} \bfseries 占（5\%）}\\\hline
 \textbf{分值} &&& \\\hline
 \end{tabularx}
-\end{table}
+\end{table*}
 }
 \signature{开题报告答辩小组负责人（签名）}
 

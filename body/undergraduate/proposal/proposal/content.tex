@@ -1,80 +1,137 @@
 \section{项目的主要内容和技术路线}
 
 \subsection{主要研究内容}
-
+我们希望通过将半经典维格纳近似的方法和半经典磨雅动力学的方法以某种方式结合起来，使其中的一方能够对另一方进行数值上的修正，从而达成稳定性与精确性皆具的新方法。为此，如何选择一个合适的可观察量组，以及如何将其中的一个方法得到的期望值组反馈给另一个方法将成为本次毕设的主要内容。
 
 \subsection{技术路线}
-对初始波函数使用Wigner变换，即
+一个可行的技术路线为半经典维格纳近似指导半经典磨雅动力学方法，即将半经典磨雅动力学演化方程中的低阶的期望值组通过自身的方法演化，然而其中一部分期望值依赖于更高阶的期望值，此时通过使用半经典维格纳近似提供的对应期望值来进行替代，我们便可实现半经典磨雅动力学演化方程的截断。
+\subsubsection{CWA部分}
+对于任意以$\boldsymbol{X} = \{x_1, x_2, ...\}$为变量的实空间表象下的波函数$\psi(\boldsymbol{X})$，其对应相空间分布为其维格纳变换：
 \begin{equation}
-	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
+\mathcal{W} \left[ \psi \right] (\boldsymbol{X}, \boldsymbol{P}) = \left(\frac{1}{2\pi \hbar}\right)^n \int \psi(\boldsymbol{X}-\boldsymbol{Y}/2) \psi(\boldsymbol{X} + \boldsymbol{Y}/2) e^{i \boldsymbol{P} \cdot \boldsymbol{Y} / \hbar} \, \mathrm{d}\boldsymbol{Y} 
 \end{equation}
 
-若初始波函数具有多项式高斯函数的形式，即
+
+对初始波函数$\psi_0(\boldsymbol{X})$及其对应相空间分布$ \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) = \mathcal{W}\left[ \psi_0(\boldsymbol{X}) \right] $, 做近似
 \begin{equation}
-	G(\boldsymbol{X}) = \mathcal{L}(\boldsymbol{X}) \exp{ \left( - \frac{1}{2} \boldsymbol{X}^T \mathcal{A} \boldsymbol{X} + \boldsymbol{B} \boldsymbol{X}\right)   }	
-\end{equation}
-其中$\mathcal{L}(\boldsymbol{X})$为以$\boldsymbol{X}$中所有变量$\{x_i\}$表达的多项式，$\mathcal{A}$为高斯函数部分的二次项，$\boldsymbol{B}$为高斯函数部分的一次项。则对应的在相空间中的分布能够以解析的形式给出，
-\begin{equation}
-	\begin{aligned}
-		P(\boldsymbol{X};\boldsymbol{P}) =& \left( \frac{1}{\hbar \pi} \right) ^n e^{-\boldsymbol{X}^T \mathcal{A} \boldsymbol{X}} e^{2\boldsymbol{B}^T\boldsymbol{X}} \left(\det \mathcal{A'}\right)^{-\frac{1}{2}} \det \mathcal{U}\times \\
-	&\mathcal{L}\left(\boldsymbol{X} - i\mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\mathcal{L}\left(\boldsymbol{X} + i \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\exp \left( - \boldsymbol{P}^T \mathcal{A}'\boldsymbol{P} \right)  
-\end{aligned}
+	\Gamma_0 (\boldsymbol{X}, \boldsymbol{P}) \sim \sum_{i,j} \Gamma_{ij}'(\boldsymbol{X}, \boldsymbol{P}) = \sum c_{ij} \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j})
 \end{equation} 
-其中$\mathcal{D}$为$\mathcal{A}$进行对角化后得到的矩阵，$\mathcal{U}$为对应的线性变换矩阵，即
- \begin{equation}
-	 \begin{cases}
-	 \mathcal{A} = \mathcal{U} \mathcal{D} \mathcal{U}^T\\
-	 \mathcal{D} = \diag\left( \lambda_1, \lambda_2, ..., \lambda_n \right) 
-         \end{cases}
-\end{equation}
-而$\mathcal{A}'$为高斯函数进行傅立叶变换后的结果，其形式满足
- \begin{equation}
+其中$\left\{ \prescript{0}{}{\boldsymbol{q}_i}, \prescript{0}{}{\boldsymbol{p}_j} \right\} $ 为相空间某区域均匀分布的格点，以及
+\begin{equation}
+	c_{ij} = \int \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j}) \, \mathrm{d}\boldsymbol{X}\mathrm{d}\boldsymbol{P} 
+\end{equation} 
+演化利用泊松括号来实现，
+\begin{equation}
+\frac{\mathrm{d}}{\mathrm{d}t} \Gamma'_{ij}(\boldsymbol{X}, \boldsymbol{P})
 \begin{cases}
-	\mathcal{A'} = \mathcal{U} \mathcal{D}' \mathcal{U}^T \\
-	\mathcal{D'} = \frac{1}{\hbar^2}\mathcal{D}^{-1} = \diag \left( \frac{1}{\lambda_1 \hbar^2}, \frac{1}{\lambda_2 \hbar^2}, ..., \frac{1}{\lambda_n \hbar ^2} \right) 
+	\frac{\mathrm{d} c_{ij}}{\mathrm{d} t} = 0 , \\
+	\frac{\mathrm{d} \boldsymbol{q}_i}{\mathrm{d} t} = \frac{\boldsymbol{p}_j}{m} , \\
+	\frac{\mathrm{d} \boldsymbol{p}_j}{\mathrm{d} t} = - \frac{\partial V(\boldsymbol{X})}{\partial \boldsymbol{X}}\bigg|_{\boldsymbol{X} = \boldsymbol{q_i}}
 \end{cases}
-\end{equation} 
-因此多项式高斯函数的相空间分布形式仍旧为多项式高斯函数。
+\end{equation}
+也就是对于CWA部分不受SMD部分影响。
 
-在具体的计算过程中，我们使用原子单位制，即$\hbar = 1$。
-
-利用Wigner分布得到相空间分布后，我们对相空间分布进行格点离散化，其方式模仿Arnaldo Donoso，Daniela Kohen 与Craig C. Martens 合箸的文章\cite{donoso2000simulation}：
+\subsubsection{SMD部分}
+准备$\boldsymbol{X}$与$\boldsymbol{P}$的幂函数$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$或其他存在迭代形式的函数形式作为可观察量组，构建演化方程
 \begin{equation}
-\rho_{i j}(\Gamma, t)=\sum_{n=1}^{N} a_{n}^{(i j)}(t) \delta\left(\Gamma-\Gamma_{n}^{(i j)}(t)\right)
-\end{equation} 
-从而将相空间分布化简为多个互相之间不存在相互作用的粒子，而后对每个粒子进行单独演化。原文章只使用了最经典的分子动力学框架，即只使用泊松括号（Poisson's Bracket)对粒子进行演化，
-\begin{equation}
-	i \hbar \frac{\partial \hat{\rho}}{\partial t}=[\hat{H}, \hat{\rho}] \sim i \hbar\{A, B\}+O\left(\hbar^{3}\right)
+\frac{\mathrm{d}}{\mathrm{d} t} \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle = \langle \{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} \rangle
 \end{equation}
-其中
-\begin{equation}
-	\{H, \rho\}=\frac{\partial H}{\partial q} \frac{\partial \rho}{\partial p}-\frac{\partial \rho}{\partial q} \frac{\partial H}{\partial p}
-\end{equation}
-因此该框架在含时演化过程中并不包含任何量子修正。因此我们考虑利用SMD框架对可观察量的变化进行修正，
-\begin{equation}
-	\frac{d}{d t}\langle A\rangle=\left\langle\frac{\partial A}{\partial t}\right\rangle+\langle\{\{A, H\}\}\rangle
-	\label{Ehrenfest_in_proposal}
-\end{equation}
-其中
+其中 $\{\{ *, * \}\}$为磨雅括号，定义为
  \begin{equation}
 	 \{\{f, g\}\}=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g
 \end{equation}
-由此我们可以在含时演化过程中仍旧包含有量子修正，而如何实现这样的修正则为本次课题的重点。
+由于哈密顿量也同时为$\boldsymbol{X}$与$\boldsymbol{P}$的幂函数，$\{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\}$亦为一系列幂函数的线性组合，
+\begin{equation}
+\{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} = \sum_k c_k P_k(\boldsymbol{X},\boldsymbol{P})
+\end{equation}
+。在演化过程中，若$P_k(\boldsymbol{X},\boldsymbol{P})$被涵盖于$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$，那么直接引用该期望值做演化，否则使用CWA的分布函数做近似，
+\begin{equation}
+\langle P_k(\boldsymbol{X},\boldsymbol{P}) \rangle = \sum_{ij} c_{ij} P_k(\boldsymbol{q}_i,\boldsymbol{p}_j)
+\end{equation}
+阶数对应了$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$所包含的最高次。定义
+\begin{equation}
+c_i = \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle, \, \boldsymbol{C} = \{c_i\}
+\end{equation}
+则演化方程可简写为
+\begin{equation}
+\frac{\mathrm{d}  \boldsymbol{C}}{\mathrm{d} t} = \mathcal{L}[\boldsymbol{C}]
+\end{equation}
+其中$\mathcal{L}[\boldsymbol{C}]$即为每一元素对应可观察量的演化方程。在此基础上我们可以使用隆格-库塔法，将关于时间的一阶微分方程转化为在时间上的离散过程，从而实现数值上的演化。
 
-本次所用程序依附于\emph{entos}的框架，该程序以C++14作为核心语言，其程序结构具有较大的灵活性，严谨的软件工程标准，同时实现了以任务为核心的多核并行计算框架\cite{Manby2019}。计算平台使用浙江大学西溪校区化学系曙光TC6000高性能计算机平台。
+
+
+
+% 对初始波函数使用Wigner变换，即
+% \begin{equation}
+% 	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
+% \end{equation}
+
+% 若初始波函数具有多项式高斯函数的形式，即
+% \begin{equation}
+% 	G(\boldsymbol{X}) = \mathcal{L}(\boldsymbol{X}) \exp{ \left( - \frac{1}{2} \boldsymbol{X}^T \mathcal{A} \boldsymbol{X} + \boldsymbol{B} \boldsymbol{X}\right)   }	
+% \end{equation}
+% 其中$\mathcal{L}(\boldsymbol{X})$为以$\boldsymbol{X}$中所有变量$\{x_i\}$表达的多项式，$\mathcal{A}$为高斯函数部分的二次项，$\boldsymbol{B}$为高斯函数部分的一次项。则对应的在相空间中的分布能够以解析的形式给出，
+% \begin{equation}
+% 	\begin{aligned}
+% 		P(\boldsymbol{X};\boldsymbol{P}) =& \left( \frac{1}{\hbar \pi} \right) ^n e^{-\boldsymbol{X}^T \mathcal{A} \boldsymbol{X}} e^{2\boldsymbol{B}^T\boldsymbol{X}} \left(\det \mathcal{A'}\right)^{-\frac{1}{2}} \det \mathcal{U}\times \\
+% 	&\mathcal{L}\left(\boldsymbol{X} - i\mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\mathcal{L}\left(\boldsymbol{X} + i \mathcal{U} \frac{\partial }{\partial \boldsymbol{X}} \right)\exp \left( - \boldsymbol{P}^T \mathcal{A}'\boldsymbol{P} \right)  
+% \end{aligned}
+% \end{equation} 
+% 其中$\mathcal{D}$为$\mathcal{A}$进行对角化后得到的矩阵，$\mathcal{U}$为对应的线性变换矩阵，即
+%  \begin{equation}
+% 	 \begin{cases}
+% 	 \mathcal{A} = \mathcal{U} \mathcal{D} \mathcal{U}^T\\
+% 	 \mathcal{D} = \diag\left( \lambda_1, \lambda_2, ..., \lambda_n \right) 
+%          \end{cases}
+% \end{equation}
+% 而$\mathcal{A}'$为高斯函数进行傅立叶变换后的结果，其形式满足
+%  \begin{equation}
+% \begin{cases}
+% 	\mathcal{A'} = \mathcal{U} \mathcal{D}' \mathcal{U}^T \\
+% 	\mathcal{D'} = \frac{1}{\hbar^2}\mathcal{D}^{-1} = \diag \left( \frac{1}{\lambda_1 \hbar^2}, \frac{1}{\lambda_2 \hbar^2}, ..., \frac{1}{\lambda_n \hbar ^2} \right) 
+% \end{cases}
+% \end{equation} 
+% 因此多项式高斯函数的相空间分布形式仍旧为多项式高斯函数。
+
+% 在具体的计算过程中，我们使用原子单位制，即$\hbar = 1$。
+
+% 利用Wigner分布得到相空间分布后，我们对相空间分布进行格点离散化，其方式模仿Arnaldo Donoso，Daniela Kohen 与Craig C. Martens 合箸的文章\cite{donoso2000simulation}：
+% \begin{equation}
+% \rho_{i j}(\Gamma, t)=\sum_{n=1}^{N} a_{n}^{(i j)}(t) \delta\left(\Gamma-\Gamma_{n}^{(i j)}(t)\right)
+% \end{equation} 
+% 从而将相空间分布化简为多个互相之间不存在相互作用的粒子，而后对每个粒子进行单独演化。原文章只使用了最经典的分子动力学框架，即只使用泊松括号（Poisson's Bracket)对粒子进行演化，
+% \begin{equation}
+% 	i \hbar \frac{\partial \hat{\rho}}{\partial t}=[\hat{H}, \hat{\rho}] \sim i \hbar\{A, B\}+O\left(\hbar^{3}\right)
+% \end{equation}
+% 其中
+% \begin{equation}
+% 	\{H, \rho\}=\frac{\partial H}{\partial q} \frac{\partial \rho}{\partial p}-\frac{\partial \rho}{\partial q} \frac{\partial H}{\partial p}
+% \end{equation}
+% 因此该框架在含时演化过程中并不包含任何量子修正。因此我们考虑利用SMD框架对可观察量的变化进行修正，
+% \begin{equation}
+% 	\frac{d}{d t}\langle A\rangle=\left\langle\frac{\partial A}{\partial t}\right\rangle+\langle\{\{A, H\}\}\rangle
+% 	\label{Ehrenfest_in_proposal}
+% \end{equation}
+% 其中
+%  \begin{equation}
+% 	 \{\{f, g\}\}=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g
+% \end{equation}
+% 由此我们可以在含时演化过程中仍旧包含有量子修正，而如何实现这样的修正则为本次课题的重点。
+
+% 本次所用程序依附于\emph{entos}的框架，该程序以C++14作为核心语言，其程序结构具有较大的灵活性，严谨的软件工程标准，同时实现了以任务为核心的多核并行计算框架\cite{Manby2019}。计算平台使用浙江大学西溪校区化学系曙光TC6000高性能计算机平台。
 
 \subsection{可行性分析}
 在化学体系中电子由于原子核的束缚处于局域态，同时原子核由于其极大的质量亦处于局域态，满足的边界条件为在无穷远处波函数值为零，即
 \begin{equation}
 	| \psi \rangle \big|_{\boldsymbol{r}\rightarrow \infty} = 0
 \end{equation} 
-因此我们能够通过高斯函数或多项式高斯函数对电子结构或核的波函数进行拟合，正如正常电子结构中对电子波函数使用高斯函数拟合。而由于高斯函数能够给出解析的傅立叶变换，我们能够在进行初始Wigner变换的过程中不丢失对原来的初始波函数的信息。同时其高度局域的性质能使相空间的格点化或是采样的过程简化的同时减小精度损失。在半经典磨雅动力学的原文献中\cite{LinjunSemiclassical}只采用了不含多项式的一维高斯函数，适用领域较小，而若利用多项式高斯函数的解析Wigner变换能够获得更广的应用场景，如单电子在三维体系下的演化。
+因此我们能够通过高斯函数或多项式高斯函数对电子结构或核的波函数进行拟合，正如正常电子结构中对电子波函数使用高斯函数拟合。而由于高斯函数能够给出解析的傅立叶变换，我们能够在进行初始Wigner变换的过程中不丢失对原来的初始波函数的信息，同时其高度局域的性质能使相空间的格点化或是采样的过程简化的同时减小精度损失。
 
-对相空间分布进行粒子化的最大的好处来源于狄拉克函数在积分中的简化能力：
+对相空间分布进行离散化的最大的好处来源于狄拉克函数在积分中的简化能力：
 \begin{equation}
 	\int f(x;p) \delta (x- x_0) \delta (p- p_0) \, dx dp = f(x_0;p_0)
 \end{equation}
-从而能够省去大量的解析计算的时间成本。而分子动力学模拟一直以高效率与卓越的稳定性而被众多理论化学研究者所使用，这是由于经典力学框架只依赖一阶力学量——即位移$x$和动量$p$，而狄拉克函数的确定恰恰只需要这两个变量作为先知条件，因此分子动力学模拟能够自恰。然而若需要通过SMD框架引入量子力学修正，则根据公式(\ref{Ehrenfest_in_proposal})，我们不能再次得到新的狄拉克函数——即狄拉克函数在量子力学框架下进行演化后不再是狄拉克函数。譬如，在一个简谐振子体系下哈密顿量表达式为
+从而能够省去大量的解析计算的时间成本。而半经典维格纳近似一直以高效率与卓越的稳定性而被众多理论化学研究者所关注，这是由于经典力学框架只依赖一阶力学量——即位移$x$和动量$p$，而狄拉克函数的确定恰恰只需要这两个变量作为先知条件，因此半经典维格纳近似能够自恰。然而若需要通过SMD框架引入量子力学修正，则根据公式(\ref{Ehrenfest_in_proposal})，我们不能再次得到新的狄拉克函数——即狄拉克函数在量子力学框架下进行演化后不再是狄拉克函数。譬如，在一个简谐振子体系下哈密顿量表达式为
 \begin{equation}
 	\hat{H} = \frac{p^2}{2} + \frac{x^2}{2}
 \end{equation}
@@ -110,11 +167,11 @@ f(x,p) \big|_{t=dt} = \delta(x-x_0 - p_0dt) \delta(p-p_0+x_0dt)
 		D(p^3) = 3 p_0 x_0^2 dt - x_0^3 dt^2
 	\end{cases}
 \end{equation}
-该推导说明了在经过$dt$时间后每一个高于一阶的项都至少存在$dt$级别的误差，其间接说明了分子动力学模拟与全量子模拟之间的差距，以及狄拉克函数近似的一些缺陷。然而它同时又能说明分子动力学模拟的数值稳定性——由于所有变量的误差都只依赖于同阶的力学量，所以不会像辅助相空间分布一样由于依赖高阶变量而产生数值崩坏的现象。因此，若在原有的分子动力学模拟的基础上考虑量子力学修正，我们必须要对经过一个时间元后的新的函数进行一些变换，对高阶项的$dt$误差项进行修正。正因为误差只有$dt$项，故这样的修正是可行的，却也有相当的难度，因为狄拉克函数的确定只依赖于所有一阶项或其同等数量的变量来得到。若想要对高阶量的演化进行修正，我们可以考虑的方法包括：
+该推导说明了在经过$dt$时间后每一个高于一阶的项都至少存在$dt$级别的误差，其间接说明了半经典维格纳近似与全量子模拟之间的差距，而该差距的积累导致了最终半经典维格纳近似的结果与全量子模拟的偏离。值得一提的是，各阶的误差项来源于同阶的力学量，这意味着对于高阶量的演化，半经典维格纳近似提供的高阶可观察量的期望值与全量子模拟的期望值的差距将以几何级数的方式增长，这将有可能显著影响依赖于这些高阶量的半经典磨雅动力学方法的稳定性。由这一点来看，我们可能需要探讨能够取代以位置和动量的幂函数的可观察量组的新方法，能够将变量的变化以局域的方式体现，从而减少几何级数的增长，增强稳定性。
+
+另一方面，若在半经典维格纳近似的基础上考虑量子力学修正，我们必须要对经过一个时间元后的新的函数进行一些变换，对高阶项的$dt$误差项进行修正。
 \begin{itemize}
-	\item 对新得到的狄拉克函数进行极小的位移，使综合所有力学量演化的误差达到最小。该想法最为平凡，是少变量面对多变量情况下的最小误差的求解。然而该方法会反而对最重要的一阶项的期望值带来误差，存在一定可能恶化最后的模拟结果。
+	\item 对新得到的狄拉克函数进行极小的位移，使综合所有力学量演化的误差达到最小。该想法是少变量面对多变量情况下的最小误差的求解。然而该方法会反而对最重要的一阶项的期望值带来误差，存在一定可能恶化最后的模拟结果。
 	\item 引入新的狄拉克函数并进行线性组合来调整误差。该想法为上一想法的延伸，通过引入新的狄拉克函数来增加变量，从而完成完整的截断。然而该方法的最大问题来源于引入新的狄拉克函数导致的计算量随时间膨胀的问题，因为每一个时间元下的演化都会引入至少同等于原来的狄拉克函数数量的新的狄拉克函数，并不适合实际体系。
-	\item 使用格点空间来描述新的狄拉克函数。由于我们想要固定所有的基组函数的数量，我们想要通过固定的格点空间来拟合这样的``波包分裂''的现象，然而其丧失了狄拉克函数的中心的自由度及相对应的分子动力学模拟的灵活性，期望效果十分有限。
-	\item 将演化后的新的函数用基组来展开。而该方案即为顾锴的多中心基组的另一种表达方式，且该基组的后续演化又会重复原先的辅助相空间分布的演化过程，可谓重蹈覆辙。
-	\item 使用格点空间拟合的相空间分布来修正使用新的狄拉克函数带来的误差，换言之将整个相空间分布的演化划分为固定狄拉克函数部分和活动狄拉克函数部分。该方案利用格点化的空间来充当``垃圾桶''，用于消除狄拉克函数的变化带来的误差，同时自身又以固定的狄拉克函数参与下一时刻的演化。该方法能够充分利用了分子动力学模拟的灵活性与狄拉克函数的数值稳定性，同时通过引入固定格点来避免计算量的膨胀。然而该方法基本意味着两倍的计算量，同时固定狄拉克函数的演化依旧值得探讨。
+	\item 对误差项进行半经典磨雅动力学的演化，最终修正我们比较关心的一阶项。这样的方法可能会仍旧引入SMD自身的数值不稳定性问题，同时其修正方法尚不明确，需进行进一步的探索。
 \end{itemize}
