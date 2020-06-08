@@ -60,10 +60,35 @@ m = 1836
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{cwa_exp_relative_error.eps}
-\caption{}
+\subfigure[绝对误差]{
+	\includegraphics[width=0.46\textwidth]{cwa_exp_absolute_error.eps}	
+}
+\subfigure[绝对误差]{
+	\includegraphics[width=0.46\textwidth]{cwa_exp_relative_error.eps}	
+}
+\caption{双势阱模型中CWA方法给出的一些典型的可观察量的期望值与DVR方法的差异}
+\label{exp-error}
 \end{figure}
-为研究CWA-SMD方法产生的误差的来源，我们考察了在该模型下DVR方法与CWA方法在高阶可观察量下的期望值的差异，
+为研究CWA-SMD方法产生的误差的来源，我们考察了在该模型下DVR方法与CWA方法在高阶可观察量下的期望值的差异，如图 \ref{exp-error}所示。
+
+我们同时考察了非谐性振子模型，其
 
 
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{anharmonic_cwa_smd.eps}
+\caption{非谐性振子模型中CWA-SMD方法的演化结果与DVR、CWA的对照}
+\label{cwa-smd-double-well}
+\end{figure}
 
+\begin{figure}
+\centering
+\subfigure[绝对误差]{
+	\includegraphics[width=0.46\textwidth]{cwa_exp_absolute_error_anharmonic.eps}	
+}
+\subfigure[绝对误差]{
+	\includegraphics[width=0.46\textwidth]{cwa_exp_relative_error_anharmonic.eps}	
+}
+\caption{非谐性振子模型中CWA方法给出的一些典型的可观察量的期望值与DVR方法的差异}
+\label{exp-error-anharmonic}
+\end{figure}
