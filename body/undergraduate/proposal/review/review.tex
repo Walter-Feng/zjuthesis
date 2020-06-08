@@ -55,9 +55,9 @@
 
 王林军老师和沈一帆在原有的量子哈密顿动力学的基础上发展出了相空间量子哈密顿动力学，即半经典磨雅动力学\cite{YifanShenPSQHD,LinjunSemiclassical}。该方法充分运用了Wigner发展出的相空间表象下的波函数表达方法，其最突出的特点在于相空间下的动量、位置算符的乘积与线性组合可直接等效于薛定谔方程下的算符写法而无需将转换成动量算符转化为关于位置算符的偏导的形式\cite{wigner1997quantum}，从而位置算符与动量算符对易，消除了算符序对于期望值的影响。同时Wigner也指出了在希尔波特空间下的波函数转换至相空间分布的方法，
 \begin{equation}
-	P\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
+	\Gamma\left(x_{i} ; p_{i}\right)=\left(\frac{1}{h \pi}\right)^{n} \int_{-\infty}^{\infty} d y_{i} \psi\left(x_{i}+y_{i}\right)^{*} \psi\left(x_{i}-y_{i}\right) e^{2 i \sum p_{i} y_{i} / \hbar}
 \end{equation}
-而相空间下的动力学演化方程由磨雅（Moyal）提出的磨雅括号给出，
+而相空间下的动力学演化方程由磨雅（Moyal）提出的磨雅括号给出\cite{moyal1949quantum}，
 \begin{equation}
 \begin{aligned}
 	 \{\{f, g\}\}&=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g  \\
@@ -77,49 +77,14 @@ f_{k l}(q, p)=f(q, p) \tilde{q}^{k} \tilde{p}^{l}
 \begin{equation}
 	f(q, p)=\frac{\exp \left\{-\frac{\left(q-\mu_{q}\right)^{2} / \sigma_{q}^{2}-2 \rho\left(q-\mu_{q}\right)\left(p-\mu_{p}\right)+\left(p-\mu_{p}\right)^{2} / \sigma_{p}^{2}}{2\left(1-\rho^{2}\right)}\right\}}{2 \pi \sigma_{q} \sigma_{p}\left(1-\rho^{2}\right)^{1 / 2}}
 \end{equation}
-该方案的最大问题在于高斯函数的单中心性质使量子力学中一些重要的性质，如退相干效应，量子反射等，无法得到描述\cite{YifanShenPSQHD}。顾锴在此基础上的一大改进方向为使用多中心基组，其中的一个例子便为多个不带有多项式的高斯函数的线性叠加，能够有效降低误差\cite{kaiguPSQHD}。然而继续沿用高斯函数作为辅助相空间分布总是或多或少地导致了数值不稳定性，本人猜测这部分来自于利用辅助相空间分布给出的高阶量近似并以此得出的各期望值演化与量子精确解给出的期望值演化之间的误差含有低于1阶的时间元项（详细讨论见下一节）。
 
-而顾锴的工作与Martens的工作都指出了经典分子动力学模拟相空间分布演化的出色的稳定性，而结果与量子精确解相比十分可观\cite{kaiguPSQHD,donoso2000simulation}。这首先依赖于最初的波函数体现出的量子效应——相较于普通的粒子，波函数存在着一定的展宽，从而能够对全空间有一个扫描的作用，也部分解释了隧穿效应这一重要的量子效应。同时从磨雅括号的形式可以看出经典力学项——泊松括号在演化中能够占主要部分，而在高阶量的参与由于$\left(\frac{\hbar}{2}\right)^{2j}$的放缩因子的存在而影响较小，从而能够与量子精确解十分接近。
+另一方面，顾锴的工作与Martens的工作都指出了经典维格纳近似（Classical Wigner Approximation, CWA）方法进行相空间分布演化的出色的稳定性，而结果与量子精确解相比十分可观\cite{kaiguPSQHD,donoso2000simulation}。这首先依赖于最初的波函数体现出的量子效应——相较于普通的粒子，波函数存在着一定的展宽，从而能够对全空间有一个扫描的作用，也部分解释了隧穿效应这一重要的量子效应。同时从磨雅括号的形式可以看出经典力学项——泊松括号在演化中能够占主要部分，而在高阶量的参与由于$\left(\frac{\hbar}{2}\right)^{2j}$的放缩因子的存在而影响较小，从而能够与量子精确解十分接近。
 \subsection{存在问题}
-然而若需要通过SMD框架引入量子力学修正，则根据公式(\ref{Ehrenfest_in_proposal})，我们不能再次得到新的狄拉克函数——即狄拉克函数在量子力学框架下进行演化后不再是狄拉克函数。譬如，在一个简谐振子体系下哈密顿量表达式为
-\begin{equation}
-	\hat{H} = \frac{p^2}{2} + \frac{x^2}{2}
-\end{equation}
-其中质量和弹簧系数皆设为1.利用公式(\ref{Moyal_review})我们能够得到一阶项
-\begin{equation}
-	\begin{cases}
-	\frac{d }{dt}\langle x \rangle = \langle p \rangle \\
-	\frac{d }{dt}\langle p \rangle = - \langle x \rangle
-	\end{cases}
-\end{equation}
-对于一狄拉克函数$f(x,p) = \delta(x-x_0)\delta(p-p_0)$,若只考虑一阶项的演化，经过$dt$时间演化后的函数形式可解析得到为
-\begin{equation}
-f(x,p) \big|_{t=dt} = \delta(x-x_0 - p_0dt) \delta(p-p_0+x_0dt)
-\end{equation}
-我们定义通过狄拉克函数演化得到的各力学量$\xi$对时间的偏导与磨雅括号得到的各力学量随时间的偏导的差为$D(\xi)$，即
-\begin{equation}
-	D(\xi) \equiv \frac{\int \xi \, f(x,p) \big|_{t=dt} \, dx dp - \int \xi \, f(x,p) \big|_{t=0} \, dx dp }{dt} - \{\{\xi,\hat{H}\}\}
-\end{equation}
-在这里罗列二阶项，
-\begin{equation}
-	\begin{cases}
-		D(x^2) = p_0^2 dt \\
-		D(x p) = - x_0 p_0 dt \\
-		D(p^2) = x_0^2 dt
-	\end{cases}
-\end{equation}
-以及三阶项，
-\begin{equation}
-	\begin{cases}
-		D(x^3) = 3 p_0^2 x_0 dt + p_0^3 dt^2\\
-		D(x^2 p) = p_0^3 dt - 2 p_0 x_0^2 dt - x_0p_0^2 dt^2\\
-		D(x p^2) = x_0^3 dt + 2x_0 p_0^2 dt + p_0 x_0^2 dt^2 \\
-		D(p^3) = 3 p_0 x_0^2 dt - x_0^3 dt^2
-	\end{cases}
-\end{equation}
-该推导说明了在经过$dt$时间后每一个高于一阶的项都至少存在$dt$级别的误差，其间接说明了分子动力学模拟与全量子模拟之间的差距，以及狄拉克函数近似的一些缺陷。但由于这些高阶力学量只依赖于同阶力学量，同时最低阶的$dt$项为一阶，从而能够在长时间数值演化的情况下保持稳定;而由于辅助相空间的演化依赖于前一个时刻的高阶量，同时涉及矩阵求逆与高斯积分的过程，可能会含有低于一阶的$dt$项，从而导致长时间演化的数值不稳定性。
+经典维格纳近似的大部分优点来源于狄拉克函数只使用其所代表的粒子的相空间坐标，但其缺陷也来源于此——由于位置和动量的演化只需服从经典力学，因此量子力学修正很难在经典维格纳近似中体现出来。同时由于在经典维格纳近似中每个狄拉克函数的配比不变，在整个演化过程中相空间一直处于非负的状态，而这与量子精确解得到的非稳态相空间分布可局部为负数相违背\cite{heller1976wigner}，从而可能导致进一步的误差，同时经典维格纳近似给出的相空间分布可能并不适合提供高阶量的期望值，从而使经典维格纳近似与半经典磨雅动力学结合带来一定的困难。另一方面，虽然有较多工作致力于改进半经典维格纳近似的精度\cite{heller1976wigner,liu2007real}，但他们并不具备一个可以随意更改精度的框架，无法做到提供足够的计算量使最终结果与量子精确解无限接近的方法，从而在一定程度上局限了这些方法的应用。在这一点上半经典磨雅动力学能够具备任意调整精度与可无限接近量子精确解这两大特性，然而其最大的缺点在于其较差的稳定性\cite{YifanShenPSQHD,kaiguPSQHD}。高斯函数的单中心性质使量子力学中一些重要的性质，如退相干效应，量子反射等，无法得到描述，存在极大的误差，最终发生数值崩坏。同时值得注意的是在已有的半经典磨雅动力学的方法中某一阶变量会依赖于更高阶的变量，而高阶变量在实际演化过程中的较大的模会同样引入几何级数级别的误差，而该误差可能也是导致半经典磨雅动力学的数值稳定性差的原因之一。
 
 \section{研究展望}
-通过对SMD框架修正下的分子动力学模拟进行系统研究，我们希望能够解决SMD方法的两大基本问题，即数值稳定性问题和多分支系统问题。为保证数值稳定性，我们可能需要充分发挥狄拉克函数在相空间优化中存在的优势，探讨尽可能的优化方法，使整体的力学量的误差达到最小，使演化结果能够进一步接近量子精确解。而若SMD框架下的粒子化相空间分布演化能够成立，那么将其拓展到多维系统几乎是没有代价的。我们能够利用类似的框架迅速应用于多维系统，观察该方法在更接近实际的系统中的表现。
+通过对建立在经典维格纳近似方法的SMD框架进行系统研究，我们希望能够解决SMD方法的两大基本问题，即数值稳定性问题和多分支系统问题。为保证数值稳定性，我们可能需要充分发挥狄拉克函数在相空间优化中存在的优势，探讨尽可能的优化方法，使整体的力学量的误差达到最小，使演化结果能够进一步接近量子精确解。同时我们可能需要探索更好的SMD方法的动力学方程框架，减少变量对于高阶量的依赖，使误差的体现能够逐渐收敛而非以几何级数的形式增长。若SMD框架下的粒子化相空间分布演化能够成立，那么将其拓展到多维系统几乎是没有代价的。我们能够利用类似的框架迅速应用于多维系统，观察该方法在更接近实际的系统中的表现。
 \newpage
-{\zihao{5}\songti\TimesNewRoman\printbibliography[title={参考文献}]}
+{\AtNextBibliography{\zihao{5}\stre} \songti \printbibliography[title={参考文献}]}
+
+%\zihao{5}\songti\TimesNewRoman

@@ -5,8 +5,9 @@
 \usepackage{tabularx}
 \usepackage{multido}
 \usepackage{fancyhdr}
-\usepackage[no-math]{fontspec}
 \usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
 \usepackage{fontenc}
 \usepackage{times}
 \usepackage{xfrac,unicode-math}
@@ -25,8 +26,9 @@
 \usepackage[style=numeric,
             sorting=none,
             bibstyle=gb7714-2015,
-            citestyle=gb7714-2015]{biblatex}
-\renewcommand*{\bibfont}{\zihao{5}\setstretch{1.0}\SongTi}
+            citestyle=gb7714-2015,
+            backend=biber,
+            refsegment=chapter]{biblatex}
 \usepackage{siunitx}
 \usepackage{makecell}
 \usepackage{caption}

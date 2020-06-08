@@ -250,7 +250,9 @@
 
 \AtBeginEnvironment{subappendices}{%
 \section*{附录}
-\addcontentsline{toc}{section}{附录}
+\addcontentsline{toc}{chapter}{附录}
 \counterwithin{figure}{subsection}
 \counterwithin{table}{subsection}
 }
+
+\renewcommand*{\bibfont}{\zihao{5}\setstretch{1.0}\songti}

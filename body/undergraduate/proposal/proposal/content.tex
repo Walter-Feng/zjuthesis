@@ -8,7 +8,7 @@
 \subsubsection{CWA部分}
 对于任意以$\boldsymbol{X} = \{x_1, x_2, ...\}$为变量的实空间表象下的波函数$\psi(\boldsymbol{X})$，其对应相空间分布为其维格纳变换：
 \begin{equation}
-\mathcal{W} \left[ \psi \right] (\boldsymbol{X}, \boldsymbol{P}) = \left(\frac{1}{2\pi \hbar}\right)^n \int \psi(\boldsymbol{X}-\boldsymbol{Y}/2) \psi(\boldsymbol{X} + \boldsymbol{Y}/2) e^{i \boldsymbol{P} \cdot \boldsymbol{Y} / \hbar} \, \mathrm{d}\boldsymbol{Y} 
+\mathcal{W} \left[ \psi \right] (\boldsymbol{X}, \boldsymbol{P}) = \left(\frac{1}{2\pi \hbar}\right)^n \int \psi(\boldsymbol{X}-\boldsymbol{Y}/2) \psi(\boldsymbol{X} + \boldsymbol{Y}/2) e^{i \boldsymbol{P} \cdot \boldsymbol{Y} / \hbar} \, d\boldsymbol{Y} 
 \end{equation}
 
 
@@ -18,15 +18,15 @@
 \end{equation} 
 其中$\left\{ \prescript{0}{}{\boldsymbol{q}_i}, \prescript{0}{}{\boldsymbol{p}_j} \right\} $ 为相空间某区域均匀分布的格点，以及
 \begin{equation}
-	c_{ij} = \int \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j}) \, \mathrm{d}\boldsymbol{X}\mathrm{d}\boldsymbol{P} 
+	c_{ij} = \int \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j}) \, d\boldsymbol{X}d\boldsymbol{P} 
 \end{equation} 
 演化利用泊松括号来实现，
 \begin{equation}
-\frac{\mathrm{d}}{\mathrm{d}t} \Gamma'_{ij}(\boldsymbol{X}, \boldsymbol{P})
+\frac{d}{dt} \Gamma'_{ij}(\boldsymbol{X}, \boldsymbol{P})
 \begin{cases}
-	\frac{\mathrm{d} c_{ij}}{\mathrm{d} t} = 0 , \\
-	\frac{\mathrm{d} \boldsymbol{q}_i}{\mathrm{d} t} = \frac{\boldsymbol{p}_j}{m} , \\
-	\frac{\mathrm{d} \boldsymbol{p}_j}{\mathrm{d} t} = - \frac{\partial V(\boldsymbol{X})}{\partial \boldsymbol{X}}\bigg|_{\boldsymbol{X} = \boldsymbol{q_i}}
+	\frac{d c_{ij}}{d t} = 0 , \\
+	\frac{d \boldsymbol{q}_i}{d t} = \frac{\boldsymbol{p}_j}{m} , \\
+	\frac{d \boldsymbol{p}_j}{d t} = - \frac{\partial V(\boldsymbol{X})}{\partial \boldsymbol{X}}\bigg|_{\boldsymbol{X} = \boldsymbol{q_i}}
 \end{cases}
 \end{equation}
 也就是对于CWA部分不受SMD部分影响。
@@ -34,7 +34,8 @@
 \subsubsection{SMD部分}
 准备$\boldsymbol{X}$与$\boldsymbol{P}$的幂函数$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$或其他存在迭代形式的函数形式作为可观察量组，构建演化方程
 \begin{equation}
-\frac{\mathrm{d}}{\mathrm{d} t} \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle = \langle \{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} \rangle
+\frac{d}{d t} \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle = \langle \{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} \rangle
+\label{Ehrenfest_in_proposal}
 \end{equation}
 其中 $\{\{ *, * \}\}$为磨雅括号，定义为
  \begin{equation}
@@ -46,7 +47,7 @@
 \end{equation}
 。在演化过程中，若$P_k(\boldsymbol{X},\boldsymbol{P})$被涵盖于$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$，那么直接引用该期望值做演化，否则使用CWA的分布函数做近似，
 \begin{equation}
-\langle P_k(\boldsymbol{X},\boldsymbol{P}) \rangle = \sum_{ij} c_{ij} P_k(\boldsymbol{q}_i,\boldsymbol{p}_j)
+\langle P_k(\boldsymbol{X},\boldsymbol{P}) \rangle \sim \sum_{ij} c_{ij} P_k(\boldsymbol{q}_i,\boldsymbol{p}_j)
 \end{equation}
 阶数对应了$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$所包含的最高次。定义
 \begin{equation}
@@ -54,7 +55,7 @@ c_i = \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle, \, \boldsymbol{C} = \{
 \end{equation}
 则演化方程可简写为
 \begin{equation}
-\frac{\mathrm{d}  \boldsymbol{C}}{\mathrm{d} t} = \mathcal{L}[\boldsymbol{C}]
+\frac{d  \boldsymbol{C}}{d t} = \mathcal{L}[\boldsymbol{C}]
 \end{equation}
 其中$\mathcal{L}[\boldsymbol{C}]$即为每一元素对应可观察量的演化方程。在此基础上我们可以使用隆格-库塔法，将关于时间的一阶微分方程转化为在时间上的离散过程，从而实现数值上的演化。
 
