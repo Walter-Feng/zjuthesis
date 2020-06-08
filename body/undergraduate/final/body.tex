@@ -1,98 +1,69 @@
 \cleardoublestylepage{common}
 
-\section{Overleaf 使用注意事项}
+\section{CWA指导的SMD框架：CWA-SMD}
 
-如果你在Overleaf上编译本模板，请注意如下事项：
-
-\begin{itemize}
-    \item 删除根目录的 ``.latexmkrc'' 文件，否则编译失败且不报任何错误
-    \item 字体有版权所以本模板不能附带字体，请务必手动上传字体文件，并在各个专业模板下手动指定字体。
-        具体方法参照 GitHub 主页的说明。
-        {\bfseries 本模板的 Overleaf 版删除了仿宋字体设置，否则会编译超时}。
-    \item 当前（2019年9月2日）的Overleaf使用TexLive 2017进行编译，但一些伪粗体复制乱码的问题需要TexLive 2019版本来解决。
-        所以各位同学可以在Overleaf上编写论文，但务必使用本地的TexLive 2019来进行最终编译，以免产生查重相关问题。
-        具体说明参照 GitHub 主页。
-\end{itemize}
-
-\subsection{节标题}
-
-\subsubsection{小节标题}
-
-\par 如\autoref{fig:a-figure}所示，这是一张由TIKZ\cite{tikz}包画出的图片，我们也可以用includegraphics来插入现有的jpg等格式的图片，如\autoref{fig:zju-logo}。
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[thick,help lines/.style={thin,draw=black!50}]
-        \def\A{\textcolor{input}{$A$}} \def\B{\textcolor{input}{$B$}}
-        \def\C{\textcolor{output}{$C$}} \def\D{$D$}
-        \def\E{$E$}
-
-        \colorlet{input}{blue!80!black} \colorlet{output}{red!70!black}
-        \colorlet{triangle}{orange}
-
-        \coordinate [label=left:\A] (A) at ($ (0,0) + .1*(rand,rand) $);
-        \coordinate [label=right:\B] (B) at ($ (1.25,0.25) + .1*(rand,rand) $);
-
-        \draw [input] (A) -- (B);
-
-        \node [name path=D,help lines,draw,label=left:\D] (D) at (A) [circle through=(B)] {};
-        \node [name path=E,help lines,draw,label=right:\E] (E) at (B) [circle through=(A)] {};
-
-        \path [name intersections={of=D and E,by={[label=above:\C]C}}];
-
-        \draw [output] (A) -- (C) -- (B);
-
-        \foreach \point in {A,B,C}
-            \fill [black,opacity=.5] (\point) circle (2pt);
-
-        \begin{pgfonlayer}{background}
-            \fill[triangle!80] (A) -- (C) -- (B) -- cycle;
-        \end{pgfonlayer}
-    \end{tikzpicture}
-
-    \caption{\label{fig:a-figure}这是一张图片}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=.4\linewidth]{logo/zju}
-    \caption{\label{fig:zju-logo}浙江大学LOGO}
-\end{figure}
-
-\par 如\autoref{tab:sample}所示，这是一张自动调节列宽的表格。
-
-\begin{table}[ht]
-    \caption{\label{tab:sample}自动调节列宽的表格}
-    \begin{tabularx}{\linewidth}{c|X<{\centering}}
-        \hline
-        第一列 & 第二列 \\ \hline
-        xxx & xxx \\ \hline
-        xxx & xxx \\ \hline
-        xxx & xxx \\ \hline
-    \end{tabularx}
-\end{table}
-
-\par 如\autoref{equ:sample}，这是一个公式
-
+将CWA方法与SMD方法结合起来的最为直接的方法便为CWA指导SMD：即通过CWA演化后得到的一系列期望值作为SMD方法的截断。我们从初始的波函数进行维格纳变换得到相空间分布，
 \begin{equation}
-    \label{equ:sample}
-    A=\overbrace{(a+b+c)+\underbrace{i(d+e+f)}_{\text{虚数}}}^{\text{复数}}
+  \mathcal{W} \left[ \psi \right] (\boldsymbol{X}, \boldsymbol{P}) = \left(\frac{1}{2\pi \hbar}\right)^n \int \psi(\boldsymbol{X}-\boldsymbol{Y}/2) \psi(\boldsymbol{X} + \boldsymbol{Y}/2) e^{i \boldsymbol{P} \cdot \boldsymbol{Y} / \hbar} \, \mathrm{d}\boldsymbol{Y} 
+\end{equation}
+其中$\boldsymbol{X}, \, \boldsymbol{P}$分别代表体系的位移自由度和平移自由度，并以此相空间分布为基础得到的任意可观察量的期望值必定是精确的。同时，将其进行离散化处理，对初始波函数$\psi_0(\boldsymbol{X})$及其对应相空间分布$ \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) = \mathcal{W}\left[ \psi_0(\boldsymbol{X}) \right] $, 做近似
+\begin{equation}
+  \Gamma_0 (\boldsymbol{X}, \boldsymbol{P}) \sim \sum_{i,j} \Gamma_{ij}'(\boldsymbol{X}, \boldsymbol{P}) = \sum c_{ij} \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j})
+\end{equation}
+其中$\left\{ \prescript{0}{}{\boldsymbol{q}_i}, \prescript{0}{}{\boldsymbol{p}_j} \right\} $ 为相空间某区域均匀分布的格点，以及
+\begin{equation}
+  c_{ij} = \int \Gamma_0(\boldsymbol{X}, \boldsymbol{P}) \delta(\boldsymbol{X} - \prescript{0}{}{\boldsymbol{q}_i}) \delta(\boldsymbol{P} - \prescript{0}{}{\boldsymbol{p}_j}) \, \mathrm{d}\boldsymbol{X}\mathrm{d}\boldsymbol{P}
+\end{equation}
+演化利用泊松括号来实现，
+\begin{equation}
+\frac{\mathrm{d}}{\mathrm{d}t} \Gamma'_{ij}(\boldsymbol{X}, \boldsymbol{P})
+\begin{cases}
+	\frac{\mathrm{d} c_{ij}}{\mathrm{d} t} = 0 , \\
+	\frac{\mathrm{d} \boldsymbol{q}_i}{\mathrm{d} t} = \frac{\boldsymbol{p}_j}{m} , \\
+	\frac{\mathrm{d} \boldsymbol{p}_j}{\mathrm{d} t} = - \frac{\partial V(\boldsymbol{X})}{\partial \boldsymbol{X}}\bigg|_{\boldsymbol{X} = \boldsymbol{q_i}}
+\end{cases}
+\end{equation}
+该部分即为CWA的演化方法，同时不受SMD方法的干涉。对于SMD部分，准备$\boldsymbol{X}$与$\boldsymbol{P}$的幂函数$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$或其他存在迭代形式的函数形式作为可观察量组，构建演化方程
+\begin{equation}
+\frac{\mathrm{d}}{\mathrm{d} t} \langle P_i(\boldsymbol{X},\boldsymbol{P}) \rangle = \langle \{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} \rangle
+\end{equation}
+其中 $\{\{ *, * \}\}$为磨雅括号，定义为
+ \begin{equation}
+	 \{\{f, g\}\}=\frac{2}{\hbar} f \sin \left[\frac{\hbar}{2}\left(\sum_{i} \overleftarrow{\partial}_{q_{i}} \overrightarrow{\partial}_{p_{i}}-\overleftarrow{\partial}_{p_{i}} \overrightarrow{\partial}_{q_{i}}\right)\right] g
+\end{equation}
+由于哈密顿量也同时为$\boldsymbol{X}$与$\boldsymbol{P}$的幂函数，$\{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\}$亦为一系列幂函数的线性组合，
+\begin{equation}
+\{\{P_i(\boldsymbol{X},\boldsymbol{P}), H\}\} = \sum_k c_k P_k(\boldsymbol{X},\boldsymbol{P})
+\end{equation}
+。在演化过程中，若$P_k(\boldsymbol{X},\boldsymbol{P})$被涵盖于$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$，那么直接引用该期望值做演化，否则使用CWA的分布函数做近似，
+\begin{equation}
+\langle P_k(\boldsymbol{X},\boldsymbol{P}) \rangle = \sum_{ij} c_{ij} P_k(\boldsymbol{q}_i,\boldsymbol{p}_j)
+\end{equation}
+阶数对应了$\{P_i(\boldsymbol{X},\boldsymbol{P})\}$所包含的最高次。
+
+我们主要考察双势阱模型，其势能函数及初始波函数的定义为
+\begin{equation}
+\begin{cases}
+V(x) = 0.000024 x^4 - 0.0003 x^2 \\
+\psi(x) = e^{-(x+2)^2} e^{2ix} \\
+m = 1836
+\end{cases}
 \end{equation}
 
-\par 如\autoref{code:sample}所示，这是一段代码。
-计算机学院的代码样式可能与其他专业不同，
-如有需要，可以从计算机学院专业模板中复制相关的代码样式设定。
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{cwa_smd.eps}
+\caption{双势阱模型中CWA-SMD方法的演化结果与DVR、CWA的对照}
+\label{cwa-smd-double-well}
+\end{figure}
+其典型结果如图 \ref{cwa-smd-double-well}所示。其中，CWA-SMD后的数字代表了追踪的可观察量的最高阶数，而更高阶的可观察量的期望值由CWA近似提供。作为示例，CWA-SMD-5只追踪1至5阶的可观察量的期望值（如 $x$, $p^2$, $x^2 p^3$等）。可以明显看出，高于2阶的CWA-SMD方法都在3000 a.u.附近与精确解（DVR）发生偏离，同时误差不断累积直至发生绝对性的偏差。而CWA-SMD-2的结果与CWA方法一致的原因是不高于2阶的可观察量（$x, p, xp, x^2, p^2$）在磨雅括号下给出的演化方程与经典力学中的泊松方程一致（因为不存在三阶及以上的偏导，对应的项不贡献）。而CWA的演化过程只考虑经典力学部分，因此CWA方法与CWA-SMD-2方法事实上会给出相同的结果。
 
-\begin{lstlisting}[%
-    language={C},
-    caption={simple.c},
-    label={code:sample}
-]
-#include <stdio.h>
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{cwa_exp_relative_error.eps}
+\caption{}
+\end{figure}
+为研究CWA-SMD方法产生的误差的来源，我们考察了在该模型下DVR方法与CWA方法在高阶可观察量下的期望值的差异，
 
-int main(int argc, char *argv[])
-{
-    printf("Hello, zjuthesis\n");
-    return 0;
-}
-\end{lstlisting}
+
+
